@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Raw and normalized data — too large for git (download ARCOS from DEA)
+data/raw/
+data/normalized/
+
+# Full EPCIS output — large generated files (run main.py to regenerate)
+data/**/events.json
+
+# current symlink — local only, points to active run
+data/epcis/current
+
+# OS
+.DS_Store
+
