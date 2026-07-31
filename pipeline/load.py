@@ -16,7 +16,7 @@ Each anomaly_type modifies this sequence:
     skip_commission       → commissioning omitted (Class A block)
     out_of_order          → receiving before shipping (Class B +60)
     jurisdiction          → EU→US at bizStep=dispensing, wrong for this step (Class B +80)
-    many_suppliers        → normal sequence + extra_distributor_ids in sourceList
+    many_suppliers        → normal sequence + reporter_id added as possessing_party
     item_location_mismatch → normal lot + one box (SGTIN[0]) already at last waypoint
                              on the same date the lot was commissioned (production day)
     impossible_transit    → waypoint_dates already show physically impossible timing
@@ -443,25 +443,29 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
     us_sgln = dea_to_sgln(buyer_id)
     us_pgln = dea_to_pgln(buyer_id)
 
-    # Extra sourceList entries for many_suppliers
-    extra_sources = []
-    if anomaly_type == "many_suppliers":
-        for extra_id in row.get("extra_distributor_ids", "").split(";"):
-            extra_id = extra_id.strip()
-            if extra_id:
-                extra_sources.append({"type": "possessing_party", "source": extra_id})
+    # reporter_id is the ARCOS seller (US distributor). Recorded as a possessing_party
+    # on the shipping event — the moment the reporter hands custody to the buyer.
+    reporter_source = (
+        [{"type": "possessing_party", "source": dea_to_pgln(reporter_id)}]
+        if reporter_id else []
+    )
 
-    def evt(biz_step, disposition, t, r_pt, biz_loc, src_sgln, src_pgln, dst_sgln, dst_pgln):
+    # Extra sourceList entries for many_suppliers (reserved — currently unused;
+    # SupplyBaseComplexityRule is disabled in the chaincode)
+    extra_sources = []
+
+    def evt(biz_step, disposition, t, r_pt, biz_loc, src_sgln, src_pgln, dst_sgln, dst_pgln,
+            extra=None):
         lot_events.append(make_event(
             sgtin, biz_step, disposition, t,
             r_pt, biz_loc, src_sgln, src_pgln, dst_sgln, dst_pgln,
-            txn_id, extra_sources if anomaly_type == "many_suppliers" else None,
+            txn_id, (extra or []) or None,
         ))
 
     if anomaly_type == "skip_commission":
         # Class A: commissioning event is missing — start from shipping
         evt("shipping",  "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT,
-            eu_gln, eu_pgln, us_sgln, us_pgln)
+            eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         evt("receiving", "active",     date_c, us_sgln, us_sgln,
             GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
 
@@ -469,28 +473,28 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
         # receiving before shipping — dates stay correct but order is swapped
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("receiving",     "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
-        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln)
+        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
 
     elif anomaly_type == "recalled":
         # commissioned with recalled disposition → blocked
         evt("commissioning", "recalled",   date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
-        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln)
+        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         evt("receiving",     "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
 
     elif anomaly_type == "jurisdiction":
         # dispensing as bizStep at receiving — wrong step for EU→US commercial transfer
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
-        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln)
+        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         evt("dispensing",    "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
 
     elif anomaly_type == "item_location_mismatch":
         # Normal lot events at correct waypoints
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
-        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln)
+        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         evt("receiving",     "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
         # Anomalous extra event: ONLY for unit_index == 0 (one rogue box).
         # This box is already at the last waypoint on the production date (date_a),
@@ -512,14 +516,14 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
         # ObjectEvents: normal sequence — discrepancy visible in AggregationEvents (lot_level_events)
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
-        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln)
+        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         evt("receiving",     "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
 
     elif anomaly_type == "shipment_divergence":
         # Seller emits commissioning + shipping — buyer never confirms receiving
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
-        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln)
+        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         # receiving intentionally absent — product shipped but never confirmed received
 
     elif anomaly_type == "transit_diversion":
@@ -529,7 +533,7 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
         wrong_pgln     = dea_to_pgln(wrong_buyer_id)
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
-        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln)
+        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         evt("receiving",     "active",     date_c, wrong_sgln, wrong_sgln, GLN_EU_PORT, PGLN_EU_PORT, wrong_sgln, wrong_pgln)
 
     else:
@@ -537,7 +541,7 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
         # For impossible_transit: waypoint_dates already carry anomalous timing
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
-        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln)
+        evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         evt("receiving",     "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
 
 

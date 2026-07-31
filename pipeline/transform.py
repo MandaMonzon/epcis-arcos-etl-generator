@@ -142,7 +142,9 @@ ANOMALY_CYCLE = [
     "skip_commission",        # no prior commissioning         → Class A block
     "out_of_order",           # receiving before shipping      → Class B +60
     "jurisdiction",           # EU→US at dispensing step       → Class B +80
-    "many_suppliers",         # ≥9 suppliers (Skilton 99th)    → Class B +85
+    # "many_suppliers" removed — SupplyBaseComplexityRule is disabled in RuleEngine.js.
+    # Re-add when the Skilton (2024) threshold is validated for the EU→US context.
+    "none",
     "item_location_mismatch", # one box at last waypoint while lot is at first
     "impossible_transit",     # lot moves A→B in 1 day (EU Port→US impossible)
     "quantity_discrepancy",   # AggregationEvent ADD ≠ DELETE (units lost in transit)
@@ -263,6 +265,8 @@ def sample_waypoint_dates(base_date_str, transaction_id, anomaly_type, waypoints
 
 # ─── Extra distributor generator ─────────────────────────────────────────────
 
+# NOTE: not called while many_suppliers is absent from ANOMALY_CYCLE.
+# Keep for when SupplyBaseComplexityRule is re-enabled in the chaincode.
 def make_extra_distributors(drug_code):
     """
     Generates EXTRA_DIST_COUNT synthetic DEA distributor IDs so that this buyer
@@ -351,9 +355,9 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
 
     output_columns = [
         "transaction_id", "reporter_id", "buyer_id", "transaction_date",
-        "drug_code", "quantity_grams", "dosage_unit",
+        "drug_code", "dosage_unit",
         "eu_manufacturer_gln", "sscc", "po_number",
-        "extra_distributor_ids", "anomaly_type",
+        "anomaly_type",
         # Waypoint dates: semicolon-separated, one date per waypoint in WAYPOINTS order.
         # e.g. "2006-01-01;2006-01-02;2006-01-15" for a 3-waypoint route.
         "waypoint_dates",
@@ -383,18 +387,15 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
                 mismatch_index = len(WAYPOINTS) - 1
 
             enriched_rows.append({
-                "transaction_id":               raw_txn_id,
+                "transaction_id":               txn_id,
                 "reporter_id":                  reporter_id,
                 "buyer_id":                     buyer_id,
                 "transaction_date":             date_str,
                 "drug_code":                    drug_code,
-                "quantity_grams":               row["quantity_grams"].strip(),
                 "dosage_unit":                  row.get("dosage_unit", "1").strip() or "1",
                 "eu_manufacturer_gln":          make_eu_gln(global_index),
                 "sscc":                         make_sscc(txn_id, global_index),
                 "po_number":                    make_po_number(txn_id, global_index),
-                "extra_distributor_ids":        (make_extra_distributors(drug_code)
-                                                 if anomaly_type == "many_suppliers" else ""),
                 "anomaly_type":                 anomaly_type,
                 "waypoint_dates":               ";".join(wp_dates),
                 "item_mismatch_waypoint_index": mismatch_index,
