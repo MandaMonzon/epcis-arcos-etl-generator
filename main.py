@@ -69,7 +69,7 @@ def _update_current_symlink(target_dir: Path):
 
 def main():
     parser = argparse.ArgumentParser(description="ARCOS -> EPCIS 2.0 Pipeline")
-    parser.add_argument("--data",  "-d", default=str(BASE / "data/raw/arcos_raw.gz"),
+    parser.add_argument("--data",  "-d", default=str(BASE.parent / "raw_data_original.gz"),
                         help="Path to ARCOS .gz file")
     parser.add_argument("--lines", "-l", type=int, default=MAX_LINES,
                         help=f"Max rows to read from ARCOS (default: {MAX_LINES})")

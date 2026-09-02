@@ -88,6 +88,8 @@ def make_item_identifier(transaction_id, unit_index, drug_code="",
     """
     effective = scheme or IDENTIFIER_SCHEME
 
+    # Keep SGTIN as the default because EPCIS 2.0 interoperability and GS1-based
+    # downstream consumers expect a standard serialized trade-item identifier.
     msg    = f"{transaction_id}|{drug_code}|{unit_index}".encode()
     digest = hmac.new(_HMAC_KEY, msg, hashlib.sha256).hexdigest()
     serial = str(int(digest[:16], 16))[:12]
@@ -96,6 +98,8 @@ def make_item_identifier(transaction_id, unit_index, drug_code="",
         return f"urn:epc:id:sgtin:{company_prefix}.{item_ref}.{serial}"
 
     if effective == "urn":
+        if not dea_no:
+            raise ValueError("dea_no is required when using scheme='urn'")
         return f"urn:dea:rn:{dea_no}:{serial}"
 
     raise ValueError(f"Unknown identifier scheme: {effective!r}. Expected 'sgtin' or 'urn'.")
