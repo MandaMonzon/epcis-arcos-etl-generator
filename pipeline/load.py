@@ -122,6 +122,28 @@ def gln_to_pgln(sgln):
     """Converts urn:epc:id:sgln:X.Y.Z → urn:epc:id:pgln:X.Y"""
     parts = sgln.replace("urn:epc:id:sgln:", "").split(".")
     return f"urn:epc:id:pgln:{parts[0]}.{parts[1]}"
+ 
+def make_wrong_id(dea_no):
+    """
+    Derives a synthetic "wrong" DEA registrant number by incrementing its
+    last character, used to simulate a transit_diversion anomaly (shipment
+    received at the wrong destination).
+ 
+    Real DEA registrant numbers are normally digits, but some end in a
+    letter (registrant-type suffix) — handle both cases so this never
+    raises on unexpected input.
+    """
+    if not dea_no:
+        return dea_no
+    last = dea_no[-1]
+    if last.isdigit():
+        new_last = str((int(last) + 1) % 10)
+    elif last.isalpha():
+        base = ord('A') if last.isupper() else ord('a')
+        new_last = chr(base + (ord(last) - base + 1) % 26)
+    else:
+        new_last = last
+    return dea_no[:-1] + new_last
 
 def parse_date(date_str):
     try:
@@ -316,8 +338,8 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
     date_c = parse_date(wp_dates[2]) if len(wp_dates) > 2 else date_b + timedelta(days=12)
 
     # For transit_diversion: receiving comes to a synthetic "wrong" DEA location
-    # derived by incrementing the last digit of buyer_id
-    wrong_buyer_id = buyer_id[:-1] + str((int(buyer_id[-1]) + 1) % 10)
+    # derived by incrementing the last character of buyer_id
+    wrong_buyer_id = make_wrong_id(buyer_id)
     wrong_sgln     = dea_to_sgln(wrong_buyer_id)
     wrong_pgln     = dea_to_pgln(wrong_buyer_id)
 
@@ -524,7 +546,7 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
 
     elif anomaly_type == "transit_diversion":
         # Shipped to correct buyer; ObjectEvent receiving arrives from wrong location
-        wrong_buyer_id = buyer_id[:-1] + str((int(buyer_id[-1]) + 1) % 10)
+        wrong_buyer_id = make_wrong_id(buyer_id)
         wrong_sgln     = dea_to_sgln(wrong_buyer_id)
         wrong_pgln     = dea_to_pgln(wrong_buyer_id)
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
