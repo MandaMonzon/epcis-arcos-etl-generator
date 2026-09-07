@@ -298,6 +298,7 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
     """
     import hashlib as _hashlib
     import random  as _random
+    import zlib    as _zlib
 
     input_file  = Path(input_path)
     output_file = Path(output_path)
@@ -335,9 +336,10 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
                 if len(reservoir[drug]) < sample_per_drug:
                     reservoir[drug].append(row)
                 else:
-                    seed = int(_hashlib.sha256(f"{drug}|{n}".encode()).hexdigest(), 16) % (2**32)
-                    rng  = _random.Random(seed)
-                    j    = rng.randint(0, n - 1)
+                    # crc32 e ~40-50x mais rapido que sha256+Random() por linha
+                    # - critico em escala de 26M linhas. Continua deterministico.
+                    seed = _zlib.crc32(f"{drug}|{n}".encode())
+                    j    = seed % n
                     if j < sample_per_drug:
                         reservoir[drug][j] = row
 
