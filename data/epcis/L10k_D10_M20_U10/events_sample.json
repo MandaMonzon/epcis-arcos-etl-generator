@@ -1,0 +1,6354 @@
+{
+  "@context": "https://ref.gs1.org/standards/epcis/epcis-context.jsonld",
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "epcisBody": {
+    "eventList": [
+      {
+        "eventID": "urn:uuid:0257a6475af8c0b7b85a3c0b8158995d",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.104187626053"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:60b0e7e39e8e11acd6ba681e7be43c52",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.104187626053"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:56f9a8f6595706a6c261b65cbe803e5c",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.104187626053"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:986cbeaeeffc68bba694cf2dcf52aba8",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.104187626053"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:7c6dec71c0f9ca73cc0b0234711c5e24",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.258773173959"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:59c79b7e6dd8bf1911d154e193dd6ddd",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.258773173959"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:74773f62d68d62e5a7aa8f27c4dad09b",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.258773173959"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:c1fe45d1fd361e8f29865a4ab35ceb67",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.258773173959"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:a87c80e51b5fb5a37441276bf7297641",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.493421228146"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:db287a50a650236ea249773642e1c1b4",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.493421228146"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:dfc46ab5c13bd0bb514d3f2d05a79ee1",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.493421228146"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:50f3694f6ad13268d29e553a86d5249c",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.493421228146"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:d99832927dc3adc2643c8eda9ac1ba60",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.158627221993"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:4962a1d07ddc7aa5d63d2cbb63e84aea",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.158627221993"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:d3a3f60577c2d6e9425a2680e3c3e197",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.158627221993"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:4a012228488e702f79f2d4939ec1f2ad",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.158627221993"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:b9a076965095272ce9f886bbcd0734e2",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.518371312877"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:eb8e9005c74f71d996a6144875926d10",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.518371312877"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:bc476f9f924e2e6685cde105421f14f6",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.518371312877"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:a82146a12396762fc083ecacedf1122b",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.518371312877"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:06b426e749bb10efa3150da4a9b75b2f",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.163162411807"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:a7c9c02a06e55387fd9bc20245555c36",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.163162411807"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:79e3a2d2f2d1eef6d1af182a8ae8466b",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.163162411807"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:96ba1671bd0c0dc454a74074df24940b",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.163162411807"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:2b43e5beab44f8e3dc93069c3b42572e",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.144150237166"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:637d8069016a90270ba5b2bc0d945386",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.144150237166"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:6f7360f6b1a3a623b04ceb41ef068150",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.144150237166"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:324e7af467d52c6b0b90ae14f767e24f",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.144150237166"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:cb2b41e11a517e20329309bccb56cbb7",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.123157465150"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:d49b82aa21294d644885ce420b92bf88",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.123157465150"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:0c3d9a49e551b84b5e889e11a8c720f2",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.123157465150"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:ca97b2effc59e87641b16b3ef9d82faa",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.123157465150"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:86c50184ff078bc9ac02c399ba8e42a1",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.121884465782"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:76d2cc13805b856a31c8fd7f83cea84e",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.121884465782"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:1d8d7df4380188e09ba75b9cc9052aee",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.121884465782"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:4463743ad1402d41b6554cb7d449d7be",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.121884465782"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:72c7591d36a5486b3786d6e9d6b9aaaa",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.337951137971"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:2451294b3f6aee632349d12fc42f9cdb",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-02T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.337951137971"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:ee4618290d69a06835858bd558c5c322",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.337951137971"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:0fb837e432e7f7b1c1385494922cecd9",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.337951137971"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:b16ae3b1224efdb5d6f4c82dc6235c3b",
+        "type": "AggregationEvent",
+        "action": "ADD",
+        "eventTime": "2006-01-02T02:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "parentID": "urn:epc:id:sscc:0614141.68dd6356fb9d39cc",
+        "childEPCs": [
+          "urn:epc:id:sgtin:0614141.107346.104187626053",
+          "urn:epc:id:sgtin:0614141.107346.258773173959",
+          "urn:epc:id:sgtin:0614141.107346.493421228146",
+          "urn:epc:id:sgtin:0614141.107346.158627221993",
+          "urn:epc:id:sgtin:0614141.107346.518371312877",
+          "urn:epc:id:sgtin:0614141.107346.163162411807",
+          "urn:epc:id:sgtin:0614141.107346.144150237166",
+          "urn:epc:id:sgtin:0614141.107346.123157465150",
+          "urn:epc:id:sgtin:0614141.107346.121884465782",
+          "urn:epc:id:sgtin:0614141.107346.337951137971"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000001.00000.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000001.00000.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:44b47d03eea33fc04682c63e4d7fb215",
+        "type": "TransactionEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.104187626053",
+          "urn:epc:id:sgtin:0614141.107346.258773173959",
+          "urn:epc:id:sgtin:0614141.107346.493421228146",
+          "urn:epc:id:sgtin:0614141.107346.158627221993",
+          "urn:epc:id:sgtin:0614141.107346.518371312877",
+          "urn:epc:id:sgtin:0614141.107346.163162411807",
+          "urn:epc:id:sgtin:0614141.107346.144150237166",
+          "urn:epc:id:sgtin:0614141.107346.123157465150",
+          "urn:epc:id:sgtin:0614141.107346.121884465782",
+          "urn:epc:id:sgtin:0614141.107346.337951137971"
+        ],
+        "bizTransactionList": [
+          {
+            "type": "urn:epcglobal:cbv:btt:desadv",
+            "bizTransaction": "urn:epc:id:gdti:0614141.001.22836.0"
+          }
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:cd93a53dade900a70f0e58e740802531",
+        "type": "AggregationEvent",
+        "action": "DELETE",
+        "eventTime": "2006-01-16T23:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "parentID": "urn:epc:id:sscc:0614141.68dd6356fb9d39cc",
+        "childEPCs": [
+          "urn:epc:id:sgtin:0614141.107346.104187626053",
+          "urn:epc:id:sgtin:0614141.107346.258773173959",
+          "urn:epc:id:sgtin:0614141.107346.493421228146",
+          "urn:epc:id:sgtin:0614141.107346.158627221993",
+          "urn:epc:id:sgtin:0614141.107346.518371312877",
+          "urn:epc:id:sgtin:0614141.107346.163162411807",
+          "urn:epc:id:sgtin:0614141.107346.144150237166",
+          "urn:epc:id:sgtin:0614141.107346.123157465150",
+          "urn:epc:id:sgtin:0614141.107346.121884465782",
+          "urn:epc:id:sgtin:0614141.107346.337951137971"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:7e4d2e200675855e21adeaafb28af441",
+        "type": "TransactionEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.104187626053",
+          "urn:epc:id:sgtin:0614141.107346.258773173959",
+          "urn:epc:id:sgtin:0614141.107346.493421228146",
+          "urn:epc:id:sgtin:0614141.107346.158627221993",
+          "urn:epc:id:sgtin:0614141.107346.518371312877",
+          "urn:epc:id:sgtin:0614141.107346.163162411807",
+          "urn:epc:id:sgtin:0614141.107346.144150237166",
+          "urn:epc:id:sgtin:0614141.107346.123157465150",
+          "urn:epc:id:sgtin:0614141.107346.121884465782",
+          "urn:epc:id:sgtin:0614141.107346.337951137971"
+        ],
+        "bizTransactionList": [
+          {
+            "type": "urn:epcglobal:cbv:btt:recadv",
+            "bizTransaction": "urn:epc:id:gdti:0614141.001.22836.0"
+          }
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BA3092703.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BA3092703"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "22836.0",
+          "cbvmda:transactionID": "22836.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:42563d6cc83b815b32b802d7cc3d6b44",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.332457450831"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000011.00010.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000011.00010.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000011.00010.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000011.00010"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000011.00010"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "513.0",
+          "cbvmda:transactionID": "513.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:6b9b1ecab8253fecc9869ccc550ae34e",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.332457450831"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000011.00010.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000011.00010.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000011.00010.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000011.00010"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000011.00010"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000011.00010.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000011.00010"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000011.00010"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "513.0",
+          "cbvmda:transactionID": "513.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:f756cee4282d3ba4d49dd0c191096f1e",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.332457450831"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000011.00010.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000011.00010"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000011.00010"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BP7511492.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BP7511492"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BP7511492"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "513.0",
+          "cbvmda:transactionID": "513.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:d5344c9683468330d6c7af131bb0c559",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-16T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.332457450831"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BP7511492.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BP7511492.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BP7511492.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BP7511492"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BP7511492"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "513.0",
+          "cbvmda:transactionID": "513.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:653d909029d199943d8d037a852a1469",
+        "type": "AggregationEvent",
+        "action": "ADD",
+        "eventTime": "2006-01-03T02:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "parentID": "urn:epc:id:sscc:0614141.3edb10d0d9036522",
+        "childEPCs": [
+          "urn:epc:id:sgtin:0614141.107346.332457450831"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000011.00010.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000011.00010.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000011.00010.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000011.00010"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000011.00010"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "513.0",
+          "cbvmda:transactionID": "513.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:376dae4abeef77d9e792e763418bcd3c",
+        "type": "TransactionEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-03T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.332457450831"
+        ],
+        "bizTransactionList": [
+          {
+            "type": "urn:epcglobal:cbv:btt:desadv",
+            "bizTransaction": "urn:epc:id:gdti:0614141.001.513.0"
+          }
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000011.00010"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000011.00010"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BP7511492"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BP7511492"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "513.0",
+          "cbvmda:transactionID": "513.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:3fb9e5b1901fc95f07fc6eb39efe971c",
+        "type": "AggregationEvent",
+        "action": "DELETE",
+        "eventTime": "2006-01-15T23:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "parentID": "urn:epc:id:sscc:0614141.3edb10d0d9036522",
+        "childEPCs": [
+          "urn:epc:id:sgtin:0614141.107346.332457450831"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BP7511492.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BP7511492.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BP7511492.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BP7511492"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BP7511492"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "513.0",
+          "cbvmda:transactionID": "513.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:9924876872784db25e7c323ab666ba00",
+        "type": "TransactionEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-16T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.332457450831"
+        ],
+        "bizTransactionList": [
+          {
+            "type": "urn:epcglobal:cbv:btt:recadv",
+            "bizTransaction": "urn:epc:id:gdti:0614141.001.513.0"
+          }
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BP7511492.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BP7511492.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.BP7511492"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:us.dea.BP7511492"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BP7511492"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BP7511492"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "513.0",
+          "cbvmda:transactionID": "513.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:4a1ac8432887ffae29c70963e6ab0edf",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.299648194570"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:7a2316fabeae320eadbb7ea81fa2eb96",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.299648194570"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:1b9c8a00b928035b9937d0e53a2ceafd",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.299648194570"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:5a2efffcb9c183fd6a38f93cbd98c017",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.299648194570"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:44f739abd6c77d48a770afd924d13ef1",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.178234468879"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:11171ddd2325e66036ec8bb15c895543",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.178234468879"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:dc2ce723f9c225a44e77902fdcdef496",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.178234468879"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:4adbef65cb04abaaad39149fb50ddd85",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.178234468879"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:9b899a867c6323ce9f2cd6d1fcb3e95f",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.985246515589"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:c549ddb08ddd99e09710407f9339373d",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.985246515589"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:bc28956f39c3248a1e35d6ca3dd2e91d",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.985246515589"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:7970a1306dcab6c67f37ab96c66fe49a",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.985246515589"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:751fd9b9fcd25bfe1e996b29301648b7",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.167955082840"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:85280b68642840767d97fd4c6ac68ba0",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.167955082840"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:f72937ed816cb714daa2c635c77c93c2",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.167955082840"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:6f3aa343382c46a9fa526957e83ff26f",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.167955082840"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:a55a349722699431a0245a151b1aa517",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.143227800833"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:b3a622fb33232abb71ac1cd6fdaa34d2",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.143227800833"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:f28190baf026e8a0b6015ef1e6be21f8",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.143227800833"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:5c9e726dcd9bdb041e9720875cf10a25",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.143227800833"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:30cc7351b18019b4ea2070c39fe08766",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.124714722927"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:e49e37c67f0ed4e73656e820fee0e8fd",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.124714722927"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:bee9fc6d74704337801e7c7fcf3c001f",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.124714722927"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:1abb94a05d6ea31aa991c251578c98f8",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.124714722927"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:0f4f37e954810a693f582dbfe08f07c0",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.151891370588"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:cdd73575f5c97f0fea59c3bf214bca91",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.151891370588"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:6c5df75197b8772e1596ed997bc4765c",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.151891370588"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:9732a365403c6ef3689f986486559844",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.151891370588"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:55423075306569f8d549fed45617b593",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.886854343713"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:050153972c5e9b0db92eaec526894332",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.886854343713"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:3669790211de7492e0498d6b656f31ab",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.886854343713"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:974180e2f7d786fe8b198686d77a6d01",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.886854343713"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:43a6ba6e2023f716d71b16d3dfa9eb02",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.122719289645"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:980aa082d8bc119ce36b4695bffd428e",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.122719289645"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:00eba906da91f89e3966fe702de4711a",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.122719289645"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:7920a304bfc854126004f8ce68cc4172",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.122719289645"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:6c23aa8bb39e5269a1409850439021f1",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.514286409933"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:a1f56fed94ee351de40d47e491db1b22",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T01:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.514286409933"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:231ca3b1192a8d013401db2097638c14",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.514286409933"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:58d6f9d3a6f4cab5a616016fd471f9ef",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.514286409933"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM46D41C4"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMF5D0E4C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM93BBFDB"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM58FA17C"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMABDEDFA"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM75B6FF5"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RMBDEBD25"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.RM96F8461"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:78b5dd8c6916b11c53ae9388579b0598",
+        "type": "AggregationEvent",
+        "action": "ADD",
+        "eventTime": "2006-01-04T02:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "parentID": "urn:epc:id:sscc:0614141.3b304b44da24b921",
+        "childEPCs": [
+          "urn:epc:id:sgtin:0614141.107346.299648194570",
+          "urn:epc:id:sgtin:0614141.107346.178234468879",
+          "urn:epc:id:sgtin:0614141.107346.985246515589",
+          "urn:epc:id:sgtin:0614141.107346.167955082840",
+          "urn:epc:id:sgtin:0614141.107346.143227800833",
+          "urn:epc:id:sgtin:0614141.107346.124714722927",
+          "urn:epc:id:sgtin:0614141.107346.151891370588",
+          "urn:epc:id:sgtin:0614141.107346.886854343713",
+          "urn:epc:id:sgtin:0614141.107346.122719289645",
+          "urn:epc:id:sgtin:0614141.107346.514286409933"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000021.00020.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000021.00020.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:e7d04d5401b004c09adece9d5ed6cd3c",
+        "type": "TransactionEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.299648194570",
+          "urn:epc:id:sgtin:0614141.107346.178234468879",
+          "urn:epc:id:sgtin:0614141.107346.985246515589",
+          "urn:epc:id:sgtin:0614141.107346.167955082840",
+          "urn:epc:id:sgtin:0614141.107346.143227800833",
+          "urn:epc:id:sgtin:0614141.107346.124714722927",
+          "urn:epc:id:sgtin:0614141.107346.151891370588",
+          "urn:epc:id:sgtin:0614141.107346.886854343713",
+          "urn:epc:id:sgtin:0614141.107346.122719289645",
+          "urn:epc:id:sgtin:0614141.107346.514286409933"
+        ],
+        "bizTransactionList": [
+          {
+            "type": "urn:epcglobal:cbv:btt:desadv",
+            "bizTransaction": "urn:epc:id:gdti:0614141.001.601001216.0"
+          }
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000021.00020"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:770c29945c64011d7c6c1a339fb578c4",
+        "type": "AggregationEvent",
+        "action": "DELETE",
+        "eventTime": "2006-01-16T23:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "parentID": "urn:epc:id:sscc:0614141.3b304b44da24b921",
+        "childEPCs": [
+          "urn:epc:id:sgtin:0614141.107346.299648194570",
+          "urn:epc:id:sgtin:0614141.107346.178234468879",
+          "urn:epc:id:sgtin:0614141.107346.985246515589",
+          "urn:epc:id:sgtin:0614141.107346.167955082840",
+          "urn:epc:id:sgtin:0614141.107346.143227800833",
+          "urn:epc:id:sgtin:0614141.107346.124714722927",
+          "urn:epc:id:sgtin:0614141.107346.151891370588",
+          "urn:epc:id:sgtin:0614141.107346.886854343713",
+          "urn:epc:id:sgtin:0614141.107346.122719289645",
+          "urn:epc:id:sgtin:0614141.107346.514286409933"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:d6be8ffaf56a88965bccfecd8baa9289",
+        "type": "TransactionEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.299648194570",
+          "urn:epc:id:sgtin:0614141.107346.178234468879",
+          "urn:epc:id:sgtin:0614141.107346.985246515589",
+          "urn:epc:id:sgtin:0614141.107346.167955082840",
+          "urn:epc:id:sgtin:0614141.107346.143227800833",
+          "urn:epc:id:sgtin:0614141.107346.124714722927",
+          "urn:epc:id:sgtin:0614141.107346.151891370588",
+          "urn:epc:id:sgtin:0614141.107346.886854343713",
+          "urn:epc:id:sgtin:0614141.107346.122719289645",
+          "urn:epc:id:sgtin:0614141.107346.514286409933"
+        ],
+        "bizTransactionList": [
+          {
+            "type": "urn:epcglobal:cbv:btt:recadv",
+            "bizTransaction": "urn:epc:id:gdti:0614141.001.601001216.0"
+          }
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.BJ6192900.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.BJ6192900"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "601001216.0",
+          "cbvmda:transactionID": "601001216.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:3aa0eb86c0c13aeed1664f90ffc1ecba",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.138457400416"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000031.00030.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000031.00030"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000031.00030"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.AQ1182930.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.AQ1182930"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.AQ1182930"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "5284.0",
+          "cbvmda:transactionID": "5284.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:a4bde7fd1e28e435a5d1c68c2d45ac60",
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-17T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "receiving",
+        "disposition": "active",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.138457400416"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:us.dea.AQ1182930.0.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:us.dea.AQ1182930.0.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:us.dea.AQ1182930.0.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.AQ1182930"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.AQ1182930"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "5284.0",
+          "cbvmda:transactionID": "5284.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:334029fc5e28978cc315e72954162bea",
+        "type": "AggregationEvent",
+        "action": "ADD",
+        "eventTime": "2006-01-04T02:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "packing",
+        "disposition": "active",
+        "parentID": "urn:epc:id:sscc:0614141.4969a4a6b635278d",
+        "childEPCs": [
+          "urn:epc:id:sgtin:0614141.107346.138457400416"
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000031.00030.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000031.00030.0"
+        },
+        "sourceList": [
+          {
+            "type": "location",
+            "source": "urn:epc:id:sgln:4000031.00030.0"
+          },
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000031.00030"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000031.00030"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4000000.99999.0"
+          },
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4000000.99999"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "5284.0",
+          "cbvmda:transactionID": "5284.0"
+        }
+      },
+      {
+        "eventID": "urn:uuid:b76761e2ddb6c24edb4fc3bde254cf9a",
+        "type": "TransactionEvent",
+        "action": "OBSERVE",
+        "eventTime": "2006-01-04T00:00:00Z",
+        "eventTimeZoneOffset": "+00:00",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.138457400416"
+        ],
+        "bizTransactionList": [
+          {
+            "type": "urn:epcglobal:cbv:btt:desadv",
+            "bizTransaction": "urn:epc:id:gdti:0614141.001.5284.0"
+          }
+        ],
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4000000.99999.0"
+        },
+        "sourceList": [
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000031.00030"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000031.00030"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:us.dea.AQ1182930"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:us.dea.AQ1182930"
+          }
+        ],
+        "ilmd": {
+          "cbvmda:lotNumber": "5284.0",
+          "cbvmda:transactionID": "5284.0"
+        }
+      }
+    ]
+  }
+}

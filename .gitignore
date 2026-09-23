@@ -16,3 +16,8 @@ data/epcis/current
 # OS
 .DS_Store
 
+output/
+data/**/arcos_clean.csv
+data/**/scenario_template.csv
+data/**/run_manifest.json
+*.bak-*
