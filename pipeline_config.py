@@ -56,8 +56,15 @@ class PipelineConfig:
     max_units_per_lot: Optional[int]
     max_mem_mb: int
 
+    anomaly_rate: float = 0.01
+    anomaly_seed: int = 42
+    anomaly_types: tuple = ("recalled", "out_of_order")
+
     def as_manifest_dict(self) -> dict:
         return {
+            "anomaly_rate": self.anomaly_rate,
+            "anomaly_seed": self.anomaly_seed,
+            "anomaly_types": list(self.anomaly_types),
             "max_lines": self.max_lines,
             "sample_per_drug": self.sample_per_drug,
             "balanced": self.balanced,

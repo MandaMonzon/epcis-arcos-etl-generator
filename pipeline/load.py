@@ -152,8 +152,8 @@ def make_wrong_id(dea_no):
 def parse_date(date_str):
     try:
         return datetime.strptime(date_str.strip(), "%Y-%m-%d").replace(tzinfo=timezone.utc)
-    except ValueError:
-        return datetime.now(timezone.utc)
+    except ValueError as exc:
+        raise ValueError(f"Invalid waypoint date: {date_str!r}") from exc
 
 
 # ─── Event builder ────────────────────────────────────────────────────────────
@@ -340,6 +340,11 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
     date_a = parse_date(wp_dates[0])
     date_b = parse_date(wp_dates[1]) if len(wp_dates) > 1 else date_a + timedelta(days=1)
     date_c = parse_date(wp_dates[2]) if len(wp_dates) > 2 else date_b + timedelta(days=12)
+    # Date-only same-day routes must still follow packing (+1h) and aggregation (+2h).
+    if date_b == date_a:
+        date_b = date_a + timedelta(hours=3)
+    if date_b < date_a or date_c <= date_b:
+        raise ValueError("Waypoint dates must progress from origin to destination")
 
     # For transit_diversion: receiving comes to a synthetic "wrong" DEA location
     # derived by incrementing the last character of buyer_id
@@ -464,6 +469,11 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
     date_a = parse_date(wp_dates[0])                        # EU Manufacturer
     date_b = parse_date(wp_dates[1]) if len(wp_dates) > 1 else date_a + timedelta(days=1)
     date_c = parse_date(wp_dates[2]) if len(wp_dates) > 2 else date_b + timedelta(days=12)
+    # Date-only same-day routes must still follow packing (+1h) and aggregation (+2h).
+    if date_b == date_a:
+        date_b = date_a + timedelta(hours=3)
+    if date_b < date_a or date_c <= date_b:
+        raise ValueError("Waypoint dates must progress from origin to destination")
 
     # US destination locations
     us_sgln = dea_to_sgln(buyer_id)
@@ -494,6 +504,13 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
             eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         evt("receiving", "active",     date_c, us_sgln, us_sgln,
             GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
+
+    elif anomaly_type == "timestamp_mismatch":
+        # Keep valid bizStep transitions so the timing rule is isolated.
+        evt("commissioning", "active", date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
+        evt("packing", "active", date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
+        evt("shipping", "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
+        evt("receiving", "active", date_b - timedelta(seconds=1), us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
 
     elif anomaly_type == "out_of_order":
         # receiving before shipping — dates stay correct but order is swapped

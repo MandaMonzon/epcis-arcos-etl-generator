@@ -110,7 +110,7 @@ WAYPOINTS = [
         "label": "EU Manufacturer",
         "transit_to_next_mean":  1,   # days to next waypoint (local logistics)
         "transit_to_next_std":   0.5,
-        "transit_to_next_min":   0,
+        "transit_to_next_min":   1,
         "transit_to_next_max":   3,
     },
     {
@@ -132,15 +132,15 @@ WAYPOINTS = [
 ]
 
 # ─── Anomaly injection cycle ──────────────────────────────────────────────────
-# 3 clean : 1 anomalous ~= 33% anomaly rate (declared methodological choice)
-# [Voas & Payne, 1990 — fault injection testing practice]
+# Legacy scenario catalog only; build_scenario uses a seeded fixed-count sample.
 ANOMALY_CYCLE = [
     "none",                   # clean — all waypoints in order, normal timing
     "none",                   # clean
     "none",                   # clean
     "recalled",               # blocked disposition            → Class B +90
     "skip_commission",        # no prior commissioning         → Class A block
-    "out_of_order",           # receiving before shipping      → Class B +60
+    "out_of_order",           # receiving before shipping: sequence violation
+    "timestamp_mismatch",     # valid steps, receiving timestamp before shipping
     "jurisdiction",           # EU→US at dispensing step       → Class B +80
     # "many_suppliers" removed — SupplyBaseComplexityRule is disabled in RuleEngine.js.
     # Re-add when the Skilton (2024) threshold is validated for the EU→US context.
@@ -231,8 +231,8 @@ def sample_waypoint_dates(base_date_str, transaction_id, anomaly_type, waypoints
 
     try:
         current = datetime.strptime(base_date_str, "%Y-%m-%d").replace(tzinfo=timezone.utc)
-    except ValueError:
-        current = datetime.now(timezone.utc)
+    except ValueError as exc:
+        raise ValueError(f"Invalid transaction date: {base_date_str!r}") from exc
 
     dates = [current.strftime("%Y-%m-%d")]
 
@@ -286,7 +286,8 @@ def make_extra_distributors(drug_code):
 # ─── Builder ─────────────────────────────────────────────────────────────────
 
 def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None,
-                   max_lines=None, balanced=True):
+                   max_lines=None, balanced=True, anomaly_rate=0.01, anomaly_seed=42,
+                   anomaly_types=("recalled", "out_of_order")):
     """
     Reads arcos_clean.csv in a single streaming pass and selects rows per drug.
 
@@ -303,6 +304,12 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
     import hashlib as _hashlib
     import random  as _random
     import zlib    as _zlib
+
+    if not 0 <= anomaly_rate <= 1:
+        raise ValueError("anomaly_rate must be between 0 and 1")
+    supported = set(ANOMALY_CYCLE) - {"none"}
+    if not anomaly_types or not set(anomaly_types) <= supported:
+        raise ValueError(f"anomaly_types must be a nonempty subset of {sorted(supported)}")
 
     input_file  = Path(input_path)
     output_file = Path(output_path)
@@ -368,6 +375,14 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
         "item_mismatch_waypoint_index",
     ]
 
+    # Fixed count, sampled without replacement; never silently exceed the rate.
+    population = sum(len(rows) for rows in seen_drugs.values())
+    anomaly_count = int(population * anomaly_rate)
+    injection_rng = _random.Random(anomaly_seed)
+    selected = injection_rng.sample(range(population), anomaly_count)
+    assignments = {index: anomaly_types[i % len(anomaly_types)]
+                   for i, index in enumerate(selected)}
+
     # Build enriched rows (used both for in-memory and file output)
     enriched_rows = []
     global_index  = 0
@@ -380,7 +395,7 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
             # Fallback: ~50% of ARCOS rows have no transaction_id (blank DEA form field).
             # Use composite key to guarantee uniqueness and determinism.
             txn_id = raw_txn_id if raw_txn_id else f"{reporter_id}|{buyer_id}|{date_str}|{drug_code}"
-            anomaly_type = ANOMALY_CYCLE[global_index % len(ANOMALY_CYCLE)]
+            anomaly_type = assignments.get(global_index, "none")
 
             wp_dates = sample_waypoint_dates(date_str, txn_id, anomaly_type, WAYPOINTS)
 

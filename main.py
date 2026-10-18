@@ -68,7 +68,14 @@ def parse_args() -> argparse.Namespace:
                               f"in-process. node003 has 16GB total RAM shared with "
                               f"Fabric/Docker/Caliper — keep this well under that. "
                               f"Default: {DEFAULT_MAX_MEM_MB}")
+    parser.add_argument("--anomaly-rate", type=float, default=0.01,
+                        help="Fraction of selected transactions injected (default 0.01; 0 for control).")
+    parser.add_argument("--anomaly-seed", type=int, default=42)
+    parser.add_argument("--anomaly-types", nargs="+", default=["recalled", "out_of_order"],
+                        help="Injection types, balanced within the selected anomaly count.")
     args = parser.parse_args()
+    if not 0 <= args.anomaly_rate <= 1:
+        parser.error("--anomaly-rate must be between 0 and 1")
     # 0 means "no limit" on the CLI, but None internally (clearer contract).
     args.max_lines = None if args.max_lines == 0 else args.max_lines
     args.sample_per_drug = None if args.sample_per_drug == 0 else args.sample_per_drug
@@ -84,6 +91,9 @@ def main():
         balanced=args.balanced,
         max_units_per_lot=args.max_units_per_lot,
         max_mem_mb=args.max_mem_mb,
+        anomaly_rate=args.anomaly_rate,
+        anomaly_seed=args.anomaly_seed,
+        anomaly_types=tuple(args.anomaly_types),
     )
 
     apply_memory_limit(config.max_mem_mb)
@@ -114,7 +124,14 @@ def main():
         sample_per_drug=config.sample_per_drug,
         max_lines=config.max_lines,
         balanced=config.balanced,
+        anomaly_rate=config.anomaly_rate,
+        anomaly_seed=config.anomaly_seed,
+        anomaly_types=config.anomaly_types,
     )
+    injected = sum(row["anomaly_type"] != "none" for row in scenario_result["rows"])
+    print(f"      Controlled injections: {injected}/{scenario_result['transactions']} transactions")
+    if config.anomaly_rate > 0 and injected == 0:
+        print("[warn] Dataset too small for the requested rate: no anomalies injected.")
     print(f"      {scenario_result['drugs']:,} distinct drugs x {config.sample_per_drug} tx "
           f"= {scenario_result['transactions']:,} transactions.")
 
@@ -129,6 +146,9 @@ def main():
           f"({convert_result['sgtins']:,} unique SGTINs).")
     for etype, count in sorted(convert_result.get('by_type', {}).items()):
         print(f"        {etype:<25} {count:>7,}")
+
+    from pipeline.ground_truth import write_ground_truth
+    write_ground_truth(scenario_csv, events_json, OUTPUT_DIR / "ground_truth.json")
 
     manifest_path = write_run_manifest(
         OUTPUT_DIR, config, str(data_path),
