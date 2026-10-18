@@ -37,6 +37,13 @@ class ControlledAnomaliesTest(unittest.TestCase):
             convert_scenario(root / 'scenario.csv', root / 'events.json', max_units_per_lot=1)
             truth = write_ground_truth(root / 'scenario.csv', root / 'events.json', root / 'truth.json')
             self.assertEqual(truth['injected_transactions'], 2)
+            generated = json.loads((root / 'events.json').read_text())['epcisBody']['eventList']
+            for event in generated:
+                self.assertTrue(all(entry.get('jurisdiction') in ('EU', 'US')
+                                    for entry in event['sourceList'] + event['destinationList']))
+                if event['bizStep'] == 'receiving':
+                    owners = [entry['source'] for entry in event['sourceList'] if entry['type'] == 'owning_party']
+                    self.assertEqual(owners, ['urn:epc:id:pgln:us.dea.AB1234567'])
             targets = [r for r in truth['records'] if r['injected']]
             self.assertTrue(all(r['target_event_ids'] and r['expected_rule_code'] for r in targets))
             self.assertTrue(all(r['anomaly_type'] == 'none' for r in generate(0)))

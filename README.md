@@ -122,3 +122,9 @@ The test suite exercises normal and anomalous ObjectEvent histories through the
 current sibling teste-smartcontract checkout using Node.js and an in-memory
 Fabric state stub. It does not establish mixed-event ordering correctness or
 Fabric throughput. Running this integration check requires that sibling repo.
+
+
+A03 mapping update: generated source/destination entries include explicit EU/US
+jurisdiction metadata for the synthetic route. Receiving-side owning_party is
+the ARCOS reporter/seller, enabling supplier counts by actual party ID. These
+metadata describe the synthetic scenario, not inferred real ARCOS geography.

@@ -661,6 +661,28 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
     if max_events:
         events = events[:max_events]
 
+    # Explicit jurisdiction metadata belongs to this synthetic route definition;
+    # company prefixes alone are not evidence of a real-world jurisdiction.
+    eu_parties = {PGLN_EU_PORT, GLN_EU_PORT}
+    for row in all_rows:
+        party = row.get("eu_manufacturer_gln", PGLN_EU_PORT)
+        eu_parties.update((party, party.replace("urn:epc:id:pgln:", "urn:epc:id:sgln:") + ".0"))
+    reporters = {row["transaction_id"]: row.get("reporter_id", "") for row in all_rows}
+    for event in events:
+        # Receiving-side supplier is the ARCOS seller, not the synthetic port.
+        reporter = reporters.get(event["ilmd"]["cbvmda:transactionID"])
+        if reporter and event["bizStep"] in ("receiving", "stocking", "dispensing"):
+            for entry in event["sourceList"]:
+                if entry["type"] == "owning_party":
+                    entry["source"] = dea_to_pgln(reporter)
+        for field, value_field in (("sourceList", "source"), ("destinationList", "destination")):
+            for entry in event[field]:
+                value = entry[value_field]
+                if value in eu_parties:
+                    entry["jurisdiction"] = "EU"
+                elif ":us.dea." in value:
+                    entry["jurisdiction"] = "US"
+
     document = {
         "@context":      ["https://ref.gs1.org/standards/epcis/epcis-context.jsonld"],
         "type":          "EPCISDocument",
