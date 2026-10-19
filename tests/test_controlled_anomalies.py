@@ -46,6 +46,14 @@ class ControlledAnomaliesTest(unittest.TestCase):
                     self.assertEqual(owners, ['urn:epc:id:pgln:us.dea.AB1234567'])
             targets = [r for r in truth['records'] if r['injected']]
             self.assertTrue(all(r['target_event_ids'] and r['expected_rule_code'] for r in targets))
+            build_scenario(source, root/'scenario.csv', sample_per_drug=200,
+                anomaly_rate=.01, anomaly_types=("skip_commission",))
+            convert_scenario(root/'scenario.csv',root/'events.json',max_units_per_lot=1)
+            unsupported = write_ground_truth(root/'scenario.csv',root/'events.json',root/'truth.json')
+            selected = [r for r in unsupported['records'] if r['injected']]
+            self.assertEqual(len(selected),2)
+            self.assertTrue(all(r['coverage_status']=='unsupported' and
+                r['expected_rule_code'] is None and not r['target_event_ids'] for r in selected))
             self.assertTrue(all(r['anomaly_type'] == 'none' for r in generate(0)))
             self.assertTrue(all(r['anomaly_type'] != 'none' for r in generate(1)))
             self.assertEqual(sum(r['anomaly_type'] != 'none' for r in generate(.001)), 0)
@@ -100,7 +108,7 @@ const histories = JSON.parse(fs.readFileSync(0, 'utf8'));
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             rows = []
-            for i, kind in enumerate(("none", "none", "out_of_order", "timestamp_mismatch")):
+            for i, kind in enumerate(("none", "none", "out_of_order", "timestamp_mismatch", "jurisdiction", "many_suppliers")):
                 rows.append(dict(transaction_id=f"mixed-{i}", reporter_id="AB1234567",
                     buyer_id="BC1234567", transaction_date="2006-01-01",
                     drug_code="00000000001", dosage_unit="3",
@@ -144,7 +152,7 @@ const fs = require('fs'); const Contract = require(process.argv[1]);
                     self.assertEqual(len(record['target_event_ids']), 3)
                     for target in record['target_event_ids']:
                         self.assertEqual(result['errors'].get(target), record['expected_rule_code'])
-            self.assertEqual(len(events), 64)
+            self.assertEqual(len(events), 99)
 
 
 if __name__ == '__main__':

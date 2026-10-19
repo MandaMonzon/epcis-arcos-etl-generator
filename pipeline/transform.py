@@ -142,8 +142,7 @@ ANOMALY_CYCLE = [
     "out_of_order",           # receiving before shipping: sequence violation
     "timestamp_mismatch",     # valid steps, receiving timestamp before shipping
     "jurisdiction",           # EU→US at dispensing step       → Class B +80
-    # "many_suppliers" removed — SupplyBaseComplexityRule is disabled in RuleEngine.js.
-    # Re-add when the Skilton (2024) threshold is validated for the EU→US context.
+    "many_suppliers",         # explicit synthetic supplier-complexity diagnostic
     "none",
     "item_location_mismatch", # one box at last waypoint while lot is at first
     "impossible_transit",     # lot moves A→B in 1 day (EU Port→US impossible)
@@ -265,8 +264,8 @@ def sample_waypoint_dates(base_date_str, transaction_id, anomaly_type, waypoints
 
 # ─── Extra distributor generator ─────────────────────────────────────────────
 
-# NOTE: not called while many_suppliers is absent from ANOMALY_CYCLE.
-# Keep for when SupplyBaseComplexityRule is re-enabled in the chaincode.
+# Legacy nine-supplier helper. The current diagnostic injects four owning parties
+# in load.py to test the first enabled complexity threshold.
 def make_extra_distributors(drug_code):
     """
     Generates EXTRA_DIST_COUNT synthetic DEA distributor IDs so that this buyer
@@ -452,8 +451,9 @@ def main():
 
     result = build_scenario(args.input, args.output)
 
-    clean_pct   = 100 * ANOMALY_CYCLE.count("none") // len(ANOMALY_CYCLE)
-    anomaly_types = sorted(set(ANOMALY_CYCLE) - {"none"})
+    injected = sum(row["anomaly_type"] != "none" for row in result["rows"])
+    rate = injected / result["transactions"] if result["transactions"] else 0
+    anomaly_types = sorted({row["anomaly_type"] for row in result["rows"]} - {"none"})
     waypoint_chain = " → ".join(w["label"] for w in WAYPOINTS)
 
     print(f"\nScenario built successfully")
@@ -462,7 +462,7 @@ def main():
     print(f"  Drugs (NDCs)       {result['drugs']:,}")
     print(f"  Transactions       {result['transactions']:,}")
     print(f"  Supply chain       {len(WAYPOINTS)} hops: {waypoint_chain}")
-    print(f"  Anomaly rate       ~{clean_pct}% clean / ~{100 - clean_pct}% anomalous")
+    print(f"  Anomaly rate       {injected}/{result['transactions']} transactions ({rate:.2%})")
     print(f"  Anomaly types      {', '.join(anomaly_types)}")
     print(f"  Skilton threshold  ≥{SKILTON_99TH} suppliers = 99th percentile [Skilton et al. 2024]")
 

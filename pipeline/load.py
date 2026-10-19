@@ -527,11 +527,12 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
         evt("receiving",     "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
 
     elif anomaly_type == "jurisdiction":
-        # dispensing as bizStep at receiving — wrong step for EU→US commercial transfer
+        # First receive legally, then dispense across EU→US to isolate jurisdiction.
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
         evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
-        evt("dispensing",    "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
+        evt("receiving", "active", date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
+        evt("dispensing",    "active",     date_c + timedelta(hours=1), us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
 
     elif anomaly_type == "item_location_mismatch":
         # Normal lot events at correct waypoints
@@ -680,6 +681,7 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
     for row in all_rows:
         party = row.get("eu_manufacturer_gln", PGLN_EU_PORT)
         eu_parties.update((party, party.replace("urn:epc:id:pgln:", "urn:epc:id:sgln:") + ".0"))
+    scenario_types = {row["transaction_id"]: row.get("anomaly_type", "none") for row in all_rows}
     reporters = {row["transaction_id"]: row.get("reporter_id", "") for row in all_rows}
     for event in events:
         # Receiving-side supplier is the ARCOS seller, not the synthetic port.
@@ -688,6 +690,11 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
             for entry in event["sourceList"]:
                 if entry["type"] == "owning_party":
                     entry["source"] = dea_to_pgln(reporter)
+        if (scenario_types[event["ilmd"]["cbvmda:transactionID"]] == "many_suppliers"
+                and event["bizStep"] == "receiving"):
+            # One actual seller plus three synthetic owning parties reaches 4.
+            event["sourceList"].extend({"type":"owning_party",
+                "source":f"urn:epc:id:pgln:us.dea.DIAGNOSTIC{i}"} for i in range(3))
         for field, value_field in (("sourceList", "source"), ("destinationList", "destination")):
             for entry in event[field]:
                 value = entry[value_field]

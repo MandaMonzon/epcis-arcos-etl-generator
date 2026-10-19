@@ -146,3 +146,29 @@ histories contain all eight observations per item and end at receiving. This is
 a local fixture correctness test, not the representative ARCOS clean-control run
 tracked under A02 or a load benchmark. The matching chaincode treats only
 ObjectEvents as physical transitions and maintains separate supporting clocks.
+
+
+### Verified scenario coverage (A06, 2026-10-19)
+
+Ground truth maps five opt-in types to exact ObjectEvent targets:
+
+| Scenario | Target | Expected code |
+|---|---|---|
+| recalled | recalled commissioning | LOGISTICS_DIVERSION_BLOCKED_DISPOSITION |
+| out_of_order | receiving before shipping in submission order | LOGISTICS_DIVERSION_SEQUENCE |
+| timestamp_mismatch | receiving timestamp before shipping, valid step order | LOGISTICS_DIVERSION_TIMING |
+| jurisdiction | cross-jurisdiction dispensing after legal receiving | LOGISTICS_DIVERSION_JURISDICTION |
+| many_suppliers | receiving from four distinct owning parties | SUPPLY_BASE_COMPLEXITY |
+
+Defaults remain recalled/out_of_order at 1%. Explicitly select other types with
+--anomaly-types. Supplier diagnostics use one real seller plus three synthetic
+owning parties; the clean boundary case has three parties. These are synthetic
+rule probes, not evidence that normal supplier diversity proves counterfeiting.
+
+Other catalog scenarios have coverage_status=unsupported and no expected code:
+skip_commission, item_location_mismatch, impossible_transit,
+quantity_discrepancy, shipment_divergence, transit_diversion. Generic rejection
+must not be interpreted as detection of those specific anomaly mechanisms.
+The duplicate-ID issue in item_location_mismatch remains an explicit limitation.
+The ground-truth writer labels supported mappings as mapped; actual verification
+is documented in the experiment reports, not inferred from that field alone.

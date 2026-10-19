@@ -9,6 +9,8 @@ EXPECTED_CODES = {
     "recalled": "LOGISTICS_DIVERSION_BLOCKED_DISPOSITION",
     "out_of_order": "LOGISTICS_DIVERSION_SEQUENCE",
     "timestamp_mismatch": "LOGISTICS_DIVERSION_TIMING",
+    "jurisdiction": "LOGISTICS_DIVERSION_JURISDICTION",
+    "many_suppliers": "SUPPLY_BASE_COMPLEXITY",
 }
 
 
@@ -37,7 +39,8 @@ def write_ground_truth(scenario_path, events_path, output_path):
         target_ids = [e["eventID"] for e in history
                       if e["type"] == "ObjectEvent" and (
                           (kind == "recalled" and e.get("disposition") == "recalled") or
-                          (kind in ("out_of_order", "timestamp_mismatch") and e["bizStep"] == "receiving"))]
+                          (kind in ("out_of_order", "timestamp_mismatch", "many_suppliers") and e["bizStep"] == "receiving") or
+                          (kind == "jurisdiction" and e["bizStep"] == "dispensing"))]
         records.append({
             "transaction_id": txn, "drug_code": row["drug_code"],
             "injected": kind != "none", "anomaly_type": kind,
@@ -46,6 +49,7 @@ def write_ground_truth(scenario_path, events_path, output_path):
                                     for epc in e.get("epcList", e.get("childEPCs", []))}),
             "target_event_ids": target_ids,
             "expected_rule_code": EXPECTED_CODES.get(kind),
+            "coverage_status": "clean_control" if kind == "none" else "mapped" if kind in EXPECTED_CODES else "unsupported",
             "expectation_scope": "ObjectEvents in generated submission order; fresh item state",
         })
     result = {
