@@ -128,3 +128,21 @@ A03 mapping update: generated source/destination entries include explicit EU/US
 jurisdiction metadata for the synthetic route. Receiving-side owning_party is
 the ARCOS reporter/seller, enabling supplier counts by actual party ID. These
 metadata describe the synthetic scenario, not inferred real ARCOS geography.
+
+
+### Mixed-event submission order (A04)
+
+The converter merges supporting events into each transaction's history by time.
+It preserves the relative ObjectEvent order for each item, even when that order
+contains an intentionally backward timestamp or invalid transition. This uses a
+monotonic scheduling key only; recorded eventTime values are never rewritten by
+the merge. Transactions remain grouped. Do not globally sort the output by time
+before testing, because that can remove intentional order anomalies.
+
+The complete-history integration check covers two clean three-item lots (32
+accepted mixed events) plus sequence and timestamp scenarios (32 additional
+events). Every anomaly target retains its expected rule code; clean product
+histories contain all eight observations per item and end at receiving. This is
+a local fixture correctness test, not the representative ARCOS clean-control run
+tracked under A02 or a load benchmark. The matching chaincode treats only
+ObjectEvents as physical transitions and maintains separate supporting clocks.

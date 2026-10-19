@@ -96,6 +96,56 @@ const histories = JSON.parse(fs.readFileSync(0, 'utf8'));
                                 input=json.dumps(histories), text=True, capture_output=True, check=True)
         self.assertEqual(json.loads(result.stdout), [[], ["LOGISTICS_DIVERSION_TIMING"]])
 
+    def test_complete_mixed_histories_preserve_injected_failures(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            rows = []
+            for i, kind in enumerate(("none", "none", "out_of_order", "timestamp_mismatch")):
+                rows.append(dict(transaction_id=f"mixed-{i}", reporter_id="AB1234567",
+                    buyer_id="BC1234567", transaction_date="2006-01-01",
+                    drug_code="00000000001", dosage_unit="3",
+                    eu_manufacturer_gln="urn:epc:id:pgln:4000001.00000",
+                    sscc=f"urn:epc:id:sscc:4000001.{i:010d}", po_number=f"po-{i}",
+                    anomaly_type=kind, waypoint_dates="2006-01-01;2006-01-01;2006-01-10"))
+            scenario = root / "scenario.csv"
+            with scenario.open('w', newline='') as stream:
+                writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+                writer.writeheader()
+                writer.writerows(rows)
+            convert_scenario(scenario, root / "events.json", max_units_per_lot=3)
+            truth = write_ground_truth(scenario, root / "events.json", root / "truth.json")
+            events = json.loads((root / "events.json").read_text())["epcisBody"]["eventList"]
+            contract = Path(__file__).resolve().parents[2] / "teste-smartcontract/chaincode/traceability/lib/traceabilityContract.js"
+            script = r"""
+const fs = require('fs'); const Contract = require(process.argv[1]);
+(async () => {
+  const events = JSON.parse(fs.readFileSync(0,'utf8')); const state = new Map();
+  const ctx = {stub:{getState:async k=>state.get(k)||Buffer.alloc(0),putState:async(k,v)=>state.set(k,v)}};
+  const contract = new Contract(); const errors = {};
+  for (const event of events) {
+    try { await contract.createEpcisEvent(ctx,JSON.stringify(event)); }
+    catch(error) { errors[event.eventID]=error.message.split(':')[0]; }
+  }
+  process.stdout.write(JSON.stringify({errors,state:Object.fromEntries([...state].map(([k,v])=>[k,JSON.parse(v.toString())]))}));
+})().catch(e=>{console.error(e);process.exit(1)});
+"""
+            response = subprocess.run(["node", "-e", script, str(contract)],
+                input=json.dumps(events), capture_output=True, text=True, check=True)
+            result = json.loads(response.stdout)
+            for record in truth['records']:
+                if not record['injected']:
+                    self.assertTrue(all(eid not in result['errors'] for eid in record['history_event_ids']))
+                    for epc in record['history_epcs']:
+                        state = result['state']['product_state_' + epc]
+                        self.assertEqual(state['lastBizStep'], 'receiving')
+                        self.assertEqual(len(state['history']), 8)
+                        self.assertEqual(set(state['observationsByType']), {'AggregationEvent', 'TransactionEvent'})
+                else:
+                    self.assertEqual(len(record['target_event_ids']), 3)
+                    for target in record['target_event_ids']:
+                        self.assertEqual(result['errors'].get(target), record['expected_rule_code'])
+            self.assertEqual(len(events), 64)
+
 
 if __name__ == '__main__':
     unittest.main()

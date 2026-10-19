@@ -647,16 +647,29 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
             lot_size = 1
         lot_size = max(lot_size, 1)
 
+        transaction_events = []
         for unit_index in range(lot_size):
             sgtin      = generate_sgtin(txn_id, unit_index, row.get("drug_code", ""))
             lot_events = []
             events_for_lot(row, sgtin, wp_dates, lot_events, unit_index)
-            events.extend(lot_events)
+            transaction_events.extend(lot_events)
 
         all_sgtins = [generate_sgtin(txn_id, i, row.get("drug_code", "")) for i in range(lot_size)]
         agg_events = []
         lot_level_events(row, all_sgtins, wp_dates, agg_events)
-        events.extend(agg_events)
+        transaction_events.extend(agg_events)
+        # Merge supporting observations chronologically, preserving each item's
+        # ObjectEvent submission order even when its timestamps are deliberately bad.
+        clocks = {}
+        scheduled = []
+        for index, event in enumerate(transaction_events):
+            key = event["eventTime"]
+            if event["type"] == "ObjectEvent":
+                epc = event["epcList"][0]
+                key = max(key, clocks.get(epc, key))
+                clocks[epc] = key
+            scheduled.append((key, index, event))
+        events.extend(event for _, _, event in sorted(scheduled, key=lambda item: item[:2]))
 
     if max_events:
         events = events[:max_events]
