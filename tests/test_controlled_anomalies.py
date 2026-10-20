@@ -108,7 +108,7 @@ const histories = JSON.parse(fs.readFileSync(0, 'utf8'));
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             rows = []
-            for i, kind in enumerate(("none", "none", "out_of_order", "timestamp_mismatch", "jurisdiction", "many_suppliers")):
+            for i, kind in enumerate(("none", "none", "out_of_order", "timestamp_mismatch", "jurisdiction", "many_suppliers", "recalled")):
                 rows.append(dict(transaction_id=f"mixed-{i}", reporter_id="AB1234567",
                     buyer_id="BC1234567", transaction_date="2006-01-01",
                     drug_code="00000000001", dosage_unit="3",
@@ -141,7 +141,13 @@ const fs = require('fs'); const Contract = require(process.argv[1]);
                 input=json.dumps(events), capture_output=True, text=True, check=True)
             result = json.loads(response.stdout)
             for record in truth['records']:
-                if not record['injected']:
+                if record['anomaly_type']=='recalled':
+                    self.assertTrue(record['injected'])
+                    self.assertEqual(record['coverage_status'],'negative_control')
+                    self.assertEqual(len(record['status_control_event_ids']),3)
+                    self.assertEqual(record['target_event_ids'],[])
+                    self.assertIsNone(record['expected_rule_code'])
+                if not record['diversion_anomaly']:
                     self.assertTrue(all(eid not in result['errors'] for eid in record['history_event_ids']))
                     for epc in record['history_epcs']:
                         state = result['state']['product_state_' + epc]
@@ -152,7 +158,7 @@ const fs = require('fs'); const Contract = require(process.argv[1]);
                     self.assertEqual(len(record['target_event_ids']), 3)
                     for target in record['target_event_ids']:
                         self.assertEqual(result['errors'].get(target), record['expected_rule_code'])
-            self.assertEqual(len(events), 99)
+            self.assertEqual(len(events), 115)
 
 
 if __name__ == '__main__':

@@ -58,7 +58,7 @@ class PipelineConfig:
 
     anomaly_rate: float = 0.01
     anomaly_seed: int = 42
-    anomaly_types: tuple = ("recalled", "out_of_order")
+    anomaly_types: tuple = ("out_of_order", "timestamp_mismatch")
 
     def as_manifest_dict(self) -> dict:
         return {

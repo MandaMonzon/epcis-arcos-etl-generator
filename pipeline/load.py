@@ -12,7 +12,7 @@ Event sequence per waypoint (normal flow, 3 waypoints A→B→C):
 
 Each anomaly_type modifies this sequence:
     none                  → normal sequence, correct dates
-    recalled              → commissioning with disposition=recalled (Class B +90)
+    recalled              → commissioning with disposition=recalled (negative status control)
     skip_commission       → commissioning omitted (Class A block)
     out_of_order          → receiving before shipping (Class B +60)
     jurisdiction          → EU→US at bizStep=dispensing, wrong for this step (Class B +80)
@@ -520,7 +520,7 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
 
     elif anomaly_type == "recalled":
-        # commissioned with recalled disposition → blocked
+        # Record recalled disposition as metadata, not a diversion anomaly.
         evt("commissioning", "recalled",   date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
         evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)

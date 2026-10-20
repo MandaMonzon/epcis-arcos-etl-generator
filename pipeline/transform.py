@@ -58,7 +58,7 @@ MATHEMATICAL AND STATISTICAL BASIS FOR SYNTHETIC VALUES
    [Source: Voas & Payne (1990), "Software fault injection testing",
     Proc. COMPASS'90, IEEE]
    Six anomaly types are cycled to cover all smart contract rule branches:
-     - recalled:         tests BLOCKED_DISPOSITION rule (Class B, +90)
+     - recalled:         negative status control (no diversion score)
      - skip_commission:  tests SEQUENCE rule — no commissioning (Class A)
      - out_of_order:     tests TIMING rule — receiving before shipping (Class B, +60)
      - jurisdiction:     tests CROSS_JURISDICTION at dispensing step (Class B, +80)
@@ -137,7 +137,7 @@ ANOMALY_CYCLE = [
     "none",                   # clean — all waypoints in order, normal timing
     "none",                   # clean
     "none",                   # clean
-    "recalled",               # blocked disposition            → Class B +90
+    "recalled",               # product-status negative control; not diversion
     "skip_commission",        # no prior commissioning         → Class A block
     "out_of_order",           # receiving before shipping: sequence violation
     "timestamp_mismatch",     # valid steps, receiving timestamp before shipping
@@ -286,7 +286,7 @@ def make_extra_distributors(drug_code):
 
 def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None,
                    max_lines=None, balanced=True, anomaly_rate=0.01, anomaly_seed=42,
-                   anomaly_types=("recalled", "out_of_order")):
+                   anomaly_types=("out_of_order", "timestamp_mismatch")):
     """
     Reads arcos_clean.csv in a single streaming pass and selects rows per drug.
 

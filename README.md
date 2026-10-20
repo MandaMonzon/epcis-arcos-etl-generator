@@ -63,7 +63,7 @@ legacy high-prevalence cycle. Run a clean control first, then a separate mixed r
 ```bash
 python3 main.py --data data/raw/arcos_raw.gz --anomaly-rate 0
 # Archive output/ before generating the next dataset.
-python3 main.py --data data/raw/arcos_raw.gz --anomaly-rate 0.01 --anomaly-seed 42 --anomaly-types recalled out_of_order
+python3 main.py --data data/raw/arcos_raw.gz --anomaly-rate 0.01 --anomaly-seed 42 --anomaly-types out_of_order timestamp_mismatch
 ```
 
 The count is `floor(selected_transactions * anomaly_rate)`, sampled without
@@ -72,7 +72,7 @@ fewer than 100 produce zero at 1%. Types are distributed evenly (counts differ b
 at most one) across the selected transactions. The seed controls injection
 placement; repeatability requires the same source rows and selection parameters.
 This rate is transaction prevalence, not item/event prevalence or real counterfeit
-prevalence. All items in the default recalled/out_of_order transactions undergo
+prevalence. All items in the default out_of_order/timestamp_mismatch transactions undergo
 the scenario; unequal transaction sizes can change item prevalence.
 
 `ground_truth.json` contains every selected transaction, its injection label,
@@ -150,17 +150,17 @@ ObjectEvents as physical transitions and maintains separate supporting clocks.
 
 ### Verified scenario coverage (A06, 2026-10-19)
 
-Ground truth maps five opt-in types to exact ObjectEvent targets:
+Ground truth maps four positive types to ObjectEvent targets and recall to a negative status control:
 
 | Scenario | Target | Expected code |
 |---|---|---|
-| recalled | recalled commissioning | LOGISTICS_DIVERSION_BLOCKED_DISPOSITION |
+| recalled | status-only commissioning (negative control) | none; expect no diversion alert |
 | out_of_order | receiving before shipping in submission order | LOGISTICS_DIVERSION_SEQUENCE |
 | timestamp_mismatch | receiving timestamp before shipping, valid step order | LOGISTICS_DIVERSION_TIMING |
 | jurisdiction | cross-jurisdiction dispensing after legal receiving | LOGISTICS_DIVERSION_JURISDICTION |
 | many_suppliers | receiving from four distinct owning parties | SUPPLY_BASE_COMPLEXITY |
 
-Defaults remain recalled/out_of_order at 1%. Explicitly select other types with
+Defaults are out_of_order/timestamp_mismatch at 1%. Explicitly select other types with
 --anomaly-types. Supplier diagnostics use one real seller plus three synthetic
 owning parties; the clean boundary case has three parties. These are synthetic
 rule probes, not evidence that normal supplier diversity proves counterfeiting.
@@ -172,3 +172,16 @@ must not be interpreted as detection of those specific anomaly mechanisms.
 The duplicate-ID issue in item_location_mismatch remains an explicit limitation.
 The ground-truth writer labels supported mappings as mapped; actual verification
 is documented in the experiment reports, not inferred from that field alone.
+
+
+### Status controls (policy revision 2026-10-20)
+
+Recalled disposition is not a diversion label. Explicit --anomaly-types recalled
+still modifies the selected transactions, but ground truth sets injected=true,
+diversion_anomaly=false, coverage_status=negative_control, and no positive target
+code. status_control_event_ids identifies the recalled observations to inspect.
+The evaluator uses diversion_anomaly for classification; injected records only
+whether a deliberate modification was made. Default 1% positive scenarios are
+out_of_order and timestamp_mismatch. Separate modification, diversion-positive
+and status-control counts are saved in ground truth. Old artifacts retain their
+old labels and must not be presented as validation of this policy revision.

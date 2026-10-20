@@ -71,7 +71,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--anomaly-rate", type=float, default=0.01,
                         help="Fraction of selected transactions injected (default 0.01; 0 for control).")
     parser.add_argument("--anomaly-seed", type=int, default=42)
-    parser.add_argument("--anomaly-types", nargs="+", default=["recalled", "out_of_order"],
+    parser.add_argument("--anomaly-types", nargs="+", default=["out_of_order", "timestamp_mismatch"],
                         help="Injection types, balanced within the selected anomaly count.")
     args = parser.parse_args()
     if not 0 <= args.anomaly_rate <= 1:
