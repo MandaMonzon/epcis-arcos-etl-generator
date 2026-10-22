@@ -142,8 +142,7 @@ ANOMALY_CYCLE = [
     "skip_commission",        # no prior commissioning         → Class A block
     "out_of_order",           # receiving before shipping      → Class B +60
     "jurisdiction",           # EU→US at dispensing step       → Class B +80
-    # "many_suppliers" removed — SupplyBaseComplexityRule is disabled in RuleEngine.js.
-    # Re-add when the Skilton (2024) threshold is validated for the EU→US context.
+    "many_suppliers",         # buyer with >= 9 distinct suppliers → SupplyBaseComplexityRule
     "none",
     "item_location_mismatch", # one box at last waypoint while lot is at first
     "impossible_transit",     # lot moves A→B in 1 day (EU Port→US impossible)
@@ -265,8 +264,6 @@ def sample_waypoint_dates(base_date_str, transaction_id, anomaly_type, waypoints
 
 # ─── Extra distributor generator ─────────────────────────────────────────────
 
-# NOTE: not called while many_suppliers is absent from ANOMALY_CYCLE.
-# Keep for when SupplyBaseComplexityRule is re-enabled in the chaincode.
 def make_extra_distributors(drug_code):
     """
     Generates EXTRA_DIST_COUNT synthetic DEA distributor IDs so that this buyer
@@ -366,6 +363,7 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
         # For item_location_mismatch: index of the waypoint where the isolated box
         # is found while the lot is still at waypoint[0]. Empty for other anomalies.
         "item_mismatch_waypoint_index",
+        "extra_distributor_ids",
     ]
 
     # Build enriched rows (used both for in-memory and file output)
@@ -401,6 +399,7 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
                 "anomaly_type":                 anomaly_type,
                 "waypoint_dates":               ";".join(wp_dates),
                 "item_mismatch_waypoint_index": mismatch_index,
+                "extra_distributor_ids":       make_extra_distributors(drug_code) if anomaly_type == "many_suppliers" else "",
             })
             global_index += 1
 

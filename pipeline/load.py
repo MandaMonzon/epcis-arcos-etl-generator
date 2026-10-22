@@ -476,9 +476,11 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
         if reporter_id else []
     )
 
-    # Extra sourceList entries for many_suppliers (reserved — currently unused;
-    # SupplyBaseComplexityRule is disabled in the chaincode)
-    extra_sources = []
+    # Extra sourceList entries for many_suppliers (buyer reaches >= 9 distinct suppliers)
+    extra_sources = [
+        {"type": "possessing_party", "source": d}
+        for d in (row.get("extra_distributor_ids") or "").split(";") if d
+    ]
 
     def evt(biz_step, disposition, t, r_pt, biz_loc, src_sgln, src_pgln, dst_sgln, dst_pgln,
             extra=None):
@@ -526,11 +528,7 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
         # This box is already at the last waypoint on the production date (date_a),
         # while the rest of the lot hasn't left the manufacturer yet.
         if unit_index == 0:
-            try:
-                mismatch_idx = int(row.get("item_mismatch_waypoint_index", len(wp_dates) - 1))
-            except (ValueError, TypeError):
-                mismatch_idx = len(wp_dates) - 1
-            mismatch_date = date_a if not row.get("item_mismatch_waypoint_index") else (parse_date(wp_dates[mismatch_idx]) if mismatch_idx < len(wp_dates) else date_c)
+            mismatch_date = date_a
             lot_events.append(make_event(
                 sgtin, "receiving", "active", mismatch_date,
                 us_sgln, us_sgln,
@@ -568,7 +566,7 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
         evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
-        evt("receiving",     "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
+        evt("receiving",     "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln, extra=extra_sources)
 
 
 # ─── Main converter ───────────────────────────────────────────────────────────
