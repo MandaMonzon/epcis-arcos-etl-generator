@@ -379,8 +379,7 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
             # Fallback: ~50% of ARCOS rows have no transaction_id (blank DEA form field).
             # Use composite key to guarantee uniqueness and determinism.
             txn_id = raw_txn_id if raw_txn_id else f"{reporter_id}|{buyer_id}|{date_str}|{drug_code}"
-            # ARCOS transaction_ids repeat across rows; a repeated id would give two lots the
-            # same SGTINs/lot key and mix their ledger state, so every scenario row gets a unique id.
+            # repeated ARCOS ids would give two lots the same SGTINs
             if txn_id in seen_txn_ids:
                 txn_id = f"{txn_id}#{global_index}"
             seen_txn_ids.add(txn_id)
