@@ -496,9 +496,9 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
             GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
 
     elif anomaly_type == "out_of_order":
-        # receiving before shipping — dates stay correct but order is swapped
+        # receiving timestamped before the earliest event of the lot
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
-        evt("receiving",     "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
+        evt("receiving",     "active",     date_a - timedelta(hours=1), us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
         evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
 
@@ -530,7 +530,7 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
                 mismatch_idx = int(row.get("item_mismatch_waypoint_index", len(wp_dates) - 1))
             except (ValueError, TypeError):
                 mismatch_idx = len(wp_dates) - 1
-            mismatch_date = parse_date(wp_dates[mismatch_idx]) if mismatch_idx < len(wp_dates) else date_c
+            mismatch_date = date_a if not row.get("item_mismatch_waypoint_index") else (parse_date(wp_dates[mismatch_idx]) if mismatch_idx < len(wp_dates) else date_c)
             lot_events.append(make_event(
                 sgtin, "receiving", "active", mismatch_date,
                 us_sgln, us_sgln,
