@@ -134,8 +134,7 @@ def extract(input_path, output_path, limit=None, chunk_size=50_000):
                     "dosage_unit":      dosage_unit,
                 }
                 missing = [field for field in ("reporter_id", "buyer_id", "drug_code",
-                                                "transaction_id", "transaction_date",
-                                                "dosage_unit") if not record[field]]
+                                                "transaction_date", "dosage_unit") if not record[field]]
                 if record["drug_code"] and not re.fullmatch(r"\d{11}", record["drug_code"]):
                     missing.append("drug_code")
                 if missing:
