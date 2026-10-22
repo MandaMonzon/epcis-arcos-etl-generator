@@ -349,7 +349,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
 
     # For quantity_discrepancy: DELETE only has 70% of the SGTINs
     import math
-    diverted_count = max(1, math.floor(len(all_sgtins) * 0.70))
+    diverted_count = min(len(all_sgtins) - 1, max(1, math.floor(len(all_sgtins) * 0.70)))
     received_sgtins = all_sgtins[:diverted_count]  # 70% arrive, 30% "disappeared"
 
     if anomaly_type == "quantity_discrepancy":
@@ -627,6 +627,8 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
         except ValueError:
             lot_size = 1
         lot_size = max(lot_size, 1)
+        if row.get("anomaly_type") == "quantity_discrepancy":
+            lot_size = max(lot_size, 2)  # a 1-unit lot cannot lose units
 
         for unit_index in range(lot_size):
             sgtin      = generate_sgtin(txn_id, unit_index, row.get("drug_code", ""))
