@@ -55,6 +55,7 @@ class PipelineConfig:
     balanced: bool
     max_units_per_lot: Optional[int]
     max_mem_mb: int
+    seed: int = 0
 
     def as_manifest_dict(self) -> dict:
         return {
@@ -63,6 +64,7 @@ class PipelineConfig:
             "balanced": self.balanced,
             "max_units_per_lot": self.max_units_per_lot,
             "max_mem_mb": self.max_mem_mb,
+            "seed": self.seed,
         }
 
 

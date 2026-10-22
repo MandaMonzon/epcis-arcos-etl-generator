@@ -20,6 +20,7 @@ shared with Fabric/Docker/Caliper. See pipeline_config.py for details.
 """
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -63,6 +64,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-units-per-lot", type=int, default=DEFAULT_MAX_UNITS_PER_LOT,
                          help=f"Max EPCIS units (SGTINs) generated per lot transaction. "
                               f"Use 0 for full dosage_unit. Default: {DEFAULT_MAX_UNITS_PER_LOT}")
+    parser.add_argument("--seed", type=int, default=0,
+                         help="Salt for sampling and anomaly assignment. 0 keeps the legacy behaviour.")
+    parser.add_argument("--output-dir", default=None,
+                         help="Where to write the run files. Default: ./output")
     parser.add_argument("--max-mem-mb", type=int, default=DEFAULT_MAX_MEM_MB,
                          help=f"Hard cap on this process's virtual memory, enforced "
                               f"in-process. node003 has 16GB total RAM shared with "
@@ -84,18 +89,21 @@ def main():
         balanced=args.balanced,
         max_units_per_lot=args.max_units_per_lot,
         max_mem_mb=args.max_mem_mb,
+        seed=args.seed,
     )
+    output_dir = Path(args.output_dir) if args.output_dir else OUTPUT_DIR
 
     apply_memory_limit(config.max_mem_mb)
     print(f"[safety] Memory capped at {config.max_mem_mb:,}MB for this process "
           f"(node003 has 16GB total RAM shared with Fabric/Docker/Caliper).")
 
     data_path    = Path(args.data)
-    clean_csv    = OUTPUT_DIR / "arcos_clean.csv"
-    scenario_csv = OUTPUT_DIR / "scenario_template.csv"
-    events_json  = OUTPUT_DIR / "events.json"
+    clean_csv    = output_dir / "arcos_clean.csv"
+    scenario_csv = output_dir / "scenario_template.csv"
+    events_json  = output_dir / "events.json"
+    extraction_json = output_dir / "extraction_accounting.json"
 
-    OUTPUT_DIR.mkdir(exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # Step 1
     if clean_csv.exists():
@@ -103,6 +111,8 @@ def main():
     else:
         print(f"[1/3] Extracting {data_path.name} -> arcos_clean.csv ...")
         result = extract(str(data_path), str(clean_csv))
+        extraction_json.write_text(json.dumps(
+            {k: result[k] for k in ("rows_read", "converted", "skipped", "skip_reasons")}, indent=2))
         print(f"      {result['converted']:,} rows extracted.")
 
     # Step 2
@@ -114,6 +124,7 @@ def main():
         sample_per_drug=config.sample_per_drug,
         max_lines=config.max_lines,
         balanced=config.balanced,
+        seed=config.seed,
     )
     print(f"      {scenario_result['drugs']:,} distinct drugs x {config.sample_per_drug} tx "
           f"= {scenario_result['transactions']:,} transactions.")
@@ -130,15 +141,23 @@ def main():
     for etype, count in sorted(convert_result.get('by_type', {}).items()):
         print(f"        {etype:<25} {count:>7,}")
 
+    accounting = {
+        "extraction": json.loads(extraction_json.read_text()) if extraction_json.exists() else None,
+        "scenario": scenario_result["accounting"],
+        "conversion": convert_result["accounting"],
+    }
+    (output_dir / "accounting.json").write_text(json.dumps(accounting, indent=2))
+    scenario_result = {k: v for k, v in scenario_result.items() if k != "rows"}
+
     manifest_path = write_run_manifest(
-        OUTPUT_DIR, config, str(data_path),
+        output_dir, config, str(data_path),
         result_stats={
             "scenario": scenario_result,
             "conversion": convert_result,
         },
     )
 
-    print(f"\nDone! Files in {OUTPUT_DIR}/")
+    print(f"\nDone! Files in {output_dir}/")
     print(f"  arcos_clean.csv        - real ARCOS data extracted")
     print(f"  scenario_template.csv  - EU->US scenario with anomalies")
     print(f"  events.json            - EPCIS 2.0 events ready for the chaincode")

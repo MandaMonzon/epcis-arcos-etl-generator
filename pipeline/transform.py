@@ -283,7 +283,7 @@ def make_extra_distributors(drug_code):
 # ─── Builder ─────────────────────────────────────────────────────────────────
 
 def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None,
-                   max_lines=None, balanced=True):
+                   max_lines=None, balanced=True, seed=0, cycle=None):
     """
     Reads arcos_clean.csv in a single streaming pass and selects rows per drug.
 
@@ -309,19 +309,21 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
     # counts[drug]    = total rows seen for this drug (for reservoir probability)
     reservoir: dict[str, list] = {}
     counts:    dict[str, int]  = {}
+    lines_read = no_drug = beyond_max_drugs = 0
 
     with open(input_file, newline="", encoding="utf-8") as f:
-        lines_read = 0
         for row in csv.DictReader(f):
             if max_lines and lines_read >= max_lines:
                 break
             lines_read += 1
             drug = (row.get("drug_code") or "").strip()
             if not drug:
+                no_drug += 1
                 continue
 
             if drug not in reservoir:
                 if max_drugs and len(reservoir) >= max_drugs:
+                    beyond_max_drugs += 1
                     continue
                 reservoir[drug] = []
                 counts[drug]    = 0
@@ -339,8 +341,8 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
                 else:
                     # crc32 e ~40-50x mais rapido que sha256+Random() por linha
                     # - critico em escala de 26M linhas. Continua deterministico.
-                    seed = _zlib.crc32(f"{drug}|{n}".encode())
-                    j    = seed % n
+                    key  = f"{drug}|{n}" + (f"|{seed}" if seed else "")
+                    j    = _zlib.crc32(key.encode()) % n
                     if j < sample_per_drug:
                         reservoir[drug][j] = row
 
@@ -351,6 +353,7 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
                       if len(rows) >= sample_per_drug}
     else:
         seen_drugs = reservoir
+    kept_before_balance = sum(len(v) for v in reservoir.values())
 
     output_columns = [
         "transaction_id", "reporter_id", "buyer_id", "transaction_date",
@@ -367,6 +370,7 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
     ]
 
     # Build enriched rows (used both for in-memory and file output)
+    anomaly_cycle = cycle or ANOMALY_CYCLE
     enriched_rows = []
     seen_txn_ids = set()
     global_index  = 0
@@ -383,7 +387,7 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
             if txn_id in seen_txn_ids:
                 txn_id = f"{txn_id}#{global_index}"
             seen_txn_ids.add(txn_id)
-            anomaly_type = ANOMALY_CYCLE[global_index % len(ANOMALY_CYCLE)]
+            anomaly_type = anomaly_cycle[(global_index + seed) % len(anomaly_cycle)]
 
             wp_dates = sample_waypoint_dates(date_str, txn_id, anomaly_type, WAYPOINTS)
 
@@ -416,7 +420,17 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
             writer.writerows(enriched_rows)
 
     total_rows = sum(len(v) for v in seen_drugs.values())
-    return {"drugs": len(seen_drugs), "transactions": total_rows,
+    accounting = {
+        "rows_read": lines_read,
+        "discarded": {
+            "missing_drug_code": no_drug,
+            "beyond_max_drugs": beyond_max_drugs,
+            "not_sampled": lines_read - no_drug - beyond_max_drugs - kept_before_balance,
+            "drug_without_full_sample": kept_before_balance - total_rows,
+        },
+        "selected": total_rows,
+    }
+    return {"drugs": len(seen_drugs), "transactions": total_rows, "accounting": accounting,
             "output": str(output_file) if output_path else None,
             "rows": enriched_rows}
 

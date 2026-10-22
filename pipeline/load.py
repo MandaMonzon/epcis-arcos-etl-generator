@@ -589,8 +589,10 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
     with open(input_path, newline="", encoding="utf-8") as f:
         all_rows = list(csv.DictReader(f))
 
+    rows_in = len(all_rows)
     if limit:
         all_rows = all_rows[:limit]
+    discarded_by_limit = rows_in - len(all_rows)
 
     # When capping events, interleave 1 transaction per drug so every drug appears
     if max_events:
@@ -615,9 +617,11 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
         all_rows = interleaved
 
     events = []
+    lots = 0
     for row_count, row in enumerate(all_rows):
         if max_events and len(events) >= max_events:
             break
+        lots += 1
 
         txn_id = row["transaction_id"].strip() or f"row-{row_count}"
         row["transaction_id"] = txn_id
@@ -645,6 +649,7 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
         lot_level_events(row, all_sgtins, wp_dates, agg_events)
         events.extend(agg_events)
 
+    discarded_by_max_events = len(all_rows) - lots
     if max_events:
         events = events[:max_events]
 
@@ -652,7 +657,7 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
         "@context":      ["https://ref.gs1.org/standards/epcis/epcis-context.jsonld"],
         "type":          "EPCISDocument",
         "schemaVersion": "2.0",
-        "creationDate":  datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "creationDate":  max((e["eventTime"] for e in events), default="1970-01-01T00:00:00Z"),
         "epcisBody":     {"eventList": events},
     }
 
@@ -671,7 +676,10 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
             for epc in e["childEPCs"]: sgtins.add(epc)
 
     return {
-        "transactions": row_count,
+        "transactions": lots,
+        "accounting":   {"rows_in": rows_in,
+                         "discarded": {"limit": discarded_by_limit, "max_events": discarded_by_max_events},
+                         "lots_converted": lots},
         "sgtins":       len(sgtins),
         "events":       len(events),
         "by_type":      by_type,

@@ -92,7 +92,7 @@ def extract(input_path, output_path, limit=None, chunk_size=50_000):
         sample = f.read(4096)
     delim = "\t" if sample.count("\t") > sample.count(",") else ","
 
-    converted, skipped = 0, 0
+    converted, skipped, rows_read = 0, 0, 0
     skip_reasons = {}
     transaction_occurrences = {}
 
@@ -114,6 +114,7 @@ def extract(input_path, output_path, limit=None, chunk_size=50_000):
         writer.writeheader()
 
         for row in reader:
+            rows_read += 1
             # Normalize header keys to lowercase — skip None keys (extra columns beyond header)
             row = {k.strip().lower(): v for k, v in row.items() if k is not None}
 
@@ -139,8 +140,7 @@ def extract(input_path, output_path, limit=None, chunk_size=50_000):
                     missing.append("drug_code")
                 if missing:
                     skipped += 1
-                    for field in missing:
-                        skip_reasons[field] = skip_reasons.get(field, 0) + 1
+                    skip_reasons[missing[0]] = skip_reasons.get(missing[0], 0) + 1
                     continue
 
                 record["transaction_id"] = "|".join((
@@ -161,11 +161,12 @@ def extract(input_path, output_path, limit=None, chunk_size=50_000):
 
             except Exception:
                 skipped += 1
+                skip_reasons["unparseable_row"] = skip_reasons.get("unparseable_row", 0) + 1
 
             if limit and converted >= limit:
                 break
 
-    return {"converted": converted, "skipped": skipped, "skip_reasons": skip_reasons,
+    return {"rows_read": rows_read, "converted": converted, "skipped": skipped, "skip_reasons": skip_reasons,
             "output": str(output_file)}
 
 
