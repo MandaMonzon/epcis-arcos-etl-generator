@@ -368,6 +368,7 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
 
     # Build enriched rows (used both for in-memory and file output)
     enriched_rows = []
+    seen_txn_ids = set()
     global_index  = 0
     for drug_code, rows in seen_drugs.items():
         for row in rows:
@@ -378,6 +379,11 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
             # Fallback: ~50% of ARCOS rows have no transaction_id (blank DEA form field).
             # Use composite key to guarantee uniqueness and determinism.
             txn_id = raw_txn_id if raw_txn_id else f"{reporter_id}|{buyer_id}|{date_str}|{drug_code}"
+            # ARCOS transaction_ids repeat across rows; a repeated id would give two lots the
+            # same SGTINs/lot key and mix their ledger state, so every scenario row gets a unique id.
+            if txn_id in seen_txn_ids:
+                txn_id = f"{txn_id}#{global_index}"
+            seen_txn_ids.add(txn_id)
             anomaly_type = ANOMALY_CYCLE[global_index % len(ANOMALY_CYCLE)]
 
             wp_dates = sample_waypoint_dates(date_str, txn_id, anomaly_type, WAYPOINTS)
