@@ -149,6 +149,8 @@ def make_wrong_id(dea_no):
         new_last = last
     return dea_no[:-1] + new_last
 
+SHIPPING_AFTER_COMMISSIONING = timedelta(hours=3)
+
 def parse_date(date_str):
     try:
         return datetime.strptime(date_str.strip(), "%Y-%m-%d").replace(tzinfo=timezone.utc)
@@ -339,6 +341,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
 
     date_a = parse_date(wp_dates[0])
     date_b = parse_date(wp_dates[1]) if len(wp_dates) > 1 else date_a + timedelta(days=1)
+    date_b = max(date_b, date_a + SHIPPING_AFTER_COMMISSIONING)
     date_c = parse_date(wp_dates[2]) if len(wp_dates) > 2 else date_b + timedelta(days=12)
 
     # For transit_diversion: receiving comes to a synthetic "wrong" DEA location
@@ -463,6 +466,7 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
     # Waypoint dates: A=wp_dates[0], B=wp_dates[1], C=wp_dates[2]
     date_a = parse_date(wp_dates[0])                        # EU Manufacturer
     date_b = parse_date(wp_dates[1]) if len(wp_dates) > 1 else date_a + timedelta(days=1)
+    date_b = max(date_b, date_a + SHIPPING_AFTER_COMMISSIONING)
     date_c = parse_date(wp_dates[2]) if len(wp_dates) > 2 else date_b + timedelta(days=12)
 
     # US destination locations
