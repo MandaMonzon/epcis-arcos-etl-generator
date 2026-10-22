@@ -54,3 +54,7 @@ SGTIN  = urn:epc:id:sgtin:{company_prefix}.{item_ref}.{serial}
 ```
 
 Same input → same SGTIN every time (reproducible across runs).
+
+## Tests
+
+`python3 -m unittest discover -s tests -t .` checks that the generator produces each scenario documented in the core repo (`docs/BUSINESS_RULES.md`) and that every `bizStep`, `disposition` and business transaction type is a GS1 CBV 2.0 value. `tests/cbv_vocabulary.json` is a snapshot of the official vocabulary from https://ref.gs1.org/cbv/.
