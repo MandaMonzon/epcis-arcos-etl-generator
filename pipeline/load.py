@@ -350,12 +350,12 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
     wrong_sgln     = dea_to_sgln(wrong_buyer_id)
     wrong_pgln     = dea_to_pgln(wrong_buyer_id)
 
-    # For quantity_discrepancy: DELETE only has 70% of the SGTINs
+    # For quantity_mismatch: DELETE only has 70% of the SGTINs
     import math
     diverted_count = min(len(all_sgtins) - 1, max(1, math.floor(len(all_sgtins) * 0.70)))
     received_sgtins = all_sgtins[:diverted_count]  # 70% arrive, 30% "disappeared"
 
-    if anomaly_type == "quantity_discrepancy":
+    if anomaly_type == "quantity_mismatch":
         # ADD: full lot packed into container
         lot_events.append(make_aggregation_event(
             sscc, all_sgtins, "ADD", "packing", "active",
@@ -368,7 +368,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
             "shipping", "in_transit", date_b,
             GLN_EU_PORT, eu_pgln, us_pgln, txn_id,
         ))
-        # DELETE: only 70% arrive — quantity discrepancy detected here
+        # DELETE: only 70% arrive — quantity mismatch detected here
         lot_events.append(make_aggregation_event(
             sscc, received_sgtins, "DELETE", "receiving", "active",
             date_c - timedelta(hours=1),
@@ -381,7 +381,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
             us_sgln, us_pgln, us_pgln, txn_id,
         ))
 
-    elif anomaly_type == "shipment_divergence":
+    elif anomaly_type == "shipment_receipt_mismatch":
         # Seller packs and emits despatch advice — but buyer never confirms receipt
         lot_events.append(make_aggregation_event(
             sscc, all_sgtins, "ADD", "packing", "active",
@@ -395,7 +395,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
             GLN_EU_PORT, eu_pgln, us_pgln, txn_id,
         ))
         # No AggregationEvent DELETE — no receiving confirmation from buyer
-        # TransactionEvent recadv is intentionally absent → SHIPMENT_DIVERGENCE
+        # TransactionEvent recadv is intentionally absent → SHIPMENT_RECEIPT_MISMATCH
 
     elif anomaly_type == "transit_diversion":
         # Normal packing at origin
@@ -540,14 +540,14 @@ def events_for_lot(row, sgtin, wp_dates, lot_events, unit_index=0):
                 txn_id,
             ))
 
-    elif anomaly_type == "quantity_discrepancy":
+    elif anomaly_type == "quantity_mismatch":
         # ObjectEvents: normal sequence — discrepancy visible in AggregationEvents (lot_level_events)
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
         evt("shipping",      "in_transit", date_b, GLN_EU_PORT, GLN_EU_PORT, eu_gln, eu_pgln, us_sgln, us_pgln, extra=reporter_source)
         evt("receiving",     "active",     date_c, us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln)
 
-    elif anomaly_type == "shipment_divergence":
+    elif anomaly_type == "shipment_receipt_mismatch":
         # Seller emits commissioning + shipping — buyer never confirms receiving
         evt("commissioning", "active",     date_a, eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT)
         evt("packing",       "active",     date_a + timedelta(hours=1), eu_gln, eu_gln, eu_gln, eu_pgln, eu_gln, eu_pgln)
@@ -635,7 +635,7 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
         except ValueError:
             lot_size = 1
         lot_size = max(lot_size, 1)
-        if row.get("anomaly_type") == "quantity_discrepancy":
+        if row.get("anomaly_type") == "quantity_mismatch":
             lot_size = max(lot_size, 2)  # a 1-unit lot cannot lose units
 
         for unit_index in range(lot_size):

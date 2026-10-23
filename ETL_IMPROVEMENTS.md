@@ -24,7 +24,7 @@ mas gravava o valor original vazio (`raw_txn_id`) na coluna `transaction_id` do 
 o campo `ilmd.cbvmda:transactionID` nos eventos EPCIS gerados por `load.py` ficava como
 `"row-N"` — um fallback arbitrário que não coincidia com a chave usada para os identificadores
 do lote. As regras do chaincode que correlacionam eventos pelo `transactionID` (como
-`LotContaminationRule` e `ShipmentReceiptDivergenceRule`) deixavam de funcionar para esses lotes.
+`LotContaminationRule` e `ShipmentReceiptMismatchRule`) deixavam de funcionar para esses lotes.
 
 Agora `transaction_id` no CSV sempre reflete a chave que foi usada para gerar todos os outros
 identificadores do lote.
@@ -127,17 +127,17 @@ Substituir `"many_suppliers"` por `"none"` não altera a taxa de anomalia (~30%)
 
 | # | Column | Fed by rule(s) |
 |---|---|---|
-| 1 | `transaction_id` | LotContaminationRule, ShipmentReceiptDivergenceRule, QuantityDiscrepancyRule, TransitDiversionRule |
+| 1 | `transaction_id` | LotContaminationRule, ShipmentReceiptMismatchRule, QuantityMismatchRule, TransitDiversionRule |
 | 2 | `reporter_id` | Agora incluso no `sourceList` do shipping event (ledger record) |
 | 3 | `buyer_id` | LogisticsDiversionRule, TransitDiversionRule, VolumeFragmentationRule |
-| 4 | `transaction_date` | ShipmentReceiptDivergenceRule (fallback) |
+| 4 | `transaction_date` | ShipmentReceiptMismatchRule (fallback) |
 | 5 | `drug_code` | HMAC input para geração de SGTINs |
-| 6 | `dosage_unit` | QuantityDiscrepancyRule (via `lot_size`) |
+| 6 | `dosage_unit` | QuantityMismatchRule (via `lot_size`) |
 | 7 | `eu_manufacturer_gln` | LogisticsDiversionRule (detecção de jurisdição EU) |
-| 8 | `sscc` | QuantityDiscrepancyRule, TransitDiversionRule |
-| 9 | `po_number` | ShipmentReceiptDivergenceRule |
+| 8 | `sscc` | QuantityMismatchRule, TransitDiversionRule |
+| 9 | `po_number` | ShipmentReceiptMismatchRule |
 | 10 | `anomaly_type` | Meta-coluna do ETL — controla sequência de eventos |
-| 11 | `waypoint_dates` | LogisticsDiversionRule (out-of-order), ShipmentReceiptDivergenceRule |
+| 11 | `waypoint_dates` | LogisticsDiversionRule (out-of-order), ShipmentReceiptMismatchRule |
 | 12 | `item_mismatch_waypoint_index` | TransitDiversionRule, LogisticsDiversionRule |
 
 **Removidas:** `quantity_grams` (dado morto), `extra_distributor_ids` (regra desativada).

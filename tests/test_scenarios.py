@@ -61,8 +61,8 @@ class ScenarioTest(unittest.TestCase):
 
     def test_every_scenario_in_the_docs_is_generated(self):
         documented = {"none", "recalled", "skip_commission", "out_of_order", "impossible_transit",
-                      "transit_diversion", "jurisdiction", "quantity_discrepancy",
-                      "shipment_divergence", "many_suppliers", "item_location_mismatch"}
+                      "transit_diversion", "jurisdiction", "quantity_mismatch",
+                      "shipment_receipt_mismatch", "many_suppliers", "item_location_mismatch"}
         self.assertEqual(documented, set(self.rows))
         for anomaly in documented:
             self.assertTrue(self.lot(anomaly), anomaly)
@@ -107,8 +107,8 @@ class ScenarioTest(unittest.TestCase):
         destination = jurisdiction_of(json.dumps(event["destinationList"]))
         self.assertNotEqual(source, destination)
 
-    def test_quantity_discrepancy_unpacks_fewer_units_than_packed(self):
-        aggregations = [e for e in self.lot("quantity_discrepancy") if e["type"] == "AggregationEvent"]
+    def test_quantity_mismatch_unpacks_fewer_units_than_packed(self):
+        aggregations = [e for e in self.lot("quantity_mismatch") if e["type"] == "AggregationEvent"]
         packed = next(len(e["childEPCs"]) for e in aggregations if e["action"] == "ADD")
         unpacked = next(len(e["childEPCs"]) for e in aggregations if e["action"] == "DELETE")
         self.assertLess(unpacked, packed * 0.9)
@@ -119,8 +119,8 @@ class ScenarioTest(unittest.TestCase):
         unpacked = next(len(e["childEPCs"]) for e in aggregations if e["action"] == "DELETE")
         self.assertEqual(packed, unpacked)
 
-    def test_shipment_divergence_has_desadv_without_recadv(self):
-        types = {b["type"] for e in self.lot("shipment_divergence") for b in e.get("bizTransactionList", [])}
+    def test_shipment_receipt_mismatch_has_desadv_without_recadv(self):
+        types = {b["type"] for e in self.lot("shipment_receipt_mismatch") for b in e.get("bizTransactionList", [])}
         self.assertIn("urn:epcglobal:cbv:btt:desadv", types)
         self.assertNotIn("urn:epcglobal:cbv:btt:recadv", types)
 

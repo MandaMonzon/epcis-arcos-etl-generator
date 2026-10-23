@@ -146,8 +146,8 @@ ANOMALY_CYCLE = [
     "none",
     "item_location_mismatch", # one box at last waypoint while lot is at first
     "impossible_transit",     # lot moves A→B in 1 day (EU Port→US impossible)
-    "quantity_discrepancy",   # AggregationEvent ADD ≠ DELETE (units lost in transit)
-    "shipment_divergence",    # seller ships but no receiving confirmation (ghost)
+    "quantity_mismatch",   # AggregationEvent ADD ≠ DELETE (units lost in transit)
+    "shipment_receipt_mismatch",    # seller ships but no receiving confirmation (ghost)
     "transit_diversion",      # shipped to buyer A, received at buyer B
 ]
 
