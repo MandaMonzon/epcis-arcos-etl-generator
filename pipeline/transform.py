@@ -280,6 +280,15 @@ def make_extra_distributors(drug_code):
     return ";".join(ids)
 
 
+def isolated_buyer_id(txn_id):
+    """
+    Synthetic buyer for a many_suppliers lot. Its extra suppliers accumulate on the buyer's
+    history, so a buyer shared with other lots would make those lots look anomalous too.
+    DEA format: 2 letters + 7 alphanumeric chars; the prefix SX marks it as synthetic.
+    """
+    return "SX" + hashlib.sha256(f"ISOLATED-BUYER|{txn_id}".encode()).hexdigest()[:7].upper()
+
+
 # ─── Builder ─────────────────────────────────────────────────────────────────
 
 def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None,
@@ -388,6 +397,9 @@ def build_scenario(input_path, output_path, max_drugs=None, sample_per_drug=None
                 txn_id = f"{txn_id}#{global_index}"
             seen_txn_ids.add(txn_id)
             anomaly_type = anomaly_cycle[(global_index + seed) % len(anomaly_cycle)]
+
+            if anomaly_type == "many_suppliers":
+                buyer_id = isolated_buyer_id(txn_id)
 
             wp_dates = sample_waypoint_dates(date_str, txn_id, anomaly_type, WAYPOINTS)
 

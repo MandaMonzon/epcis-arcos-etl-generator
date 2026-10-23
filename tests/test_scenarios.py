@@ -155,3 +155,21 @@ class ScenarioTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class IsolatedSupplyBuyerTest(unittest.TestCase):
+    def test_many_suppliers_buyer_is_shared_with_no_other_lot(self):
+        from pipeline.transform import build_scenario
+        with tempfile.TemporaryDirectory() as tmp:
+            clean = Path(tmp) / "clean.csv"
+            with open(clean, "w", newline="") as f:
+                w = csv.writer(f)
+                w.writerow(["transaction_id", "reporter_id", "buyer_id", "transaction_date", "drug_code", "dosage_unit"])
+                for i in range(140):
+                    w.writerow([f"T{i}", f"AB{i % 7:07d}", "ZZ0000001", "2010-03-01", f"D{i % 2}", "100"])
+            rows = build_scenario(str(clean), str(Path(tmp) / "s.csv"), sample_per_drug=70, balanced=True)["rows"]
+        suppliers_buyers = [r["buyer_id"] for r in rows if r["anomaly_type"] == "many_suppliers"]
+        others = {r["buyer_id"] for r in rows if r["anomaly_type"] != "many_suppliers"}
+        self.assertTrue(suppliers_buyers)
+        self.assertEqual(len(set(suppliers_buyers)), len(suppliers_buyers))
+        self.assertFalse(set(suppliers_buyers) & others)
