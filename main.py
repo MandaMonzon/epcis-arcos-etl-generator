@@ -55,6 +55,9 @@ def parse_args() -> argparse.Namespace:
                          help="Uniform random sample of this many valid rows over the WHOLE raw file "
                               "(seeded by --seed, with a representativeness report). "
                               "Preferred over --max-lines, which only reads the first rows.")
+    parser.add_argument("--sample-design", choices=("stratified", "simple"), default="stratified",
+                         help="With --sample-rows: stratified by drug (proportional allocation with a floor of "
+                              "--sample-per-drug rows, inclusion weights recorded) or a simple uniform sample.")
     parser.add_argument("--sample-per-drug", type=int, default=DEFAULT_SAMPLE_PER_DRUG,
                          help=f"Transactions per distinct drug (reservoir sampling, "
                               f"reproducible). Use 0 to keep all. Default: {DEFAULT_SAMPLE_PER_DRUG}")
@@ -114,16 +117,17 @@ def main():
         print(f"[1/3] arcos_clean.csv already exists - skipping extraction.")
     else:
         print(f"[1/3] Extracting {data_path.name} -> arcos_clean.csv ...")
-        result = extract(str(data_path), str(clean_csv), sample_size=args.sample_rows, seed=args.seed)
+        result = extract(str(data_path), str(clean_csv), sample_size=args.sample_rows, seed=args.seed,
+                         design=args.sample_design, min_per_stratum=args.sample_per_drug or 10)
         keys = ["rows_read", "converted", "skipped", "skip_reasons", "not_in_random_sample"]
         if args.sample_rows:
-            keys += ["population_valid", "sample_seed", "representativeness"]
+            keys += ["population_valid", "sample_seed", "sampling_design", "representativeness"]
         extraction_json.write_text(json.dumps({k: result[k] for k in keys}, indent=2))
         print(f"      {result['converted']:,} rows extracted.")
         if args.sample_rows:
             for name, report in result["representativeness"].items():
-                print(f"      representativeness by {name}: p={report['p_value']}, "
-                      f"total variation={report['total_variation']:.4f}")
+                print(f"      representativeness by {name}: " +
+                      ", ".join(f"{k}={v:.4g}" if isinstance(v, float) else f"{k}={v}" for k, v in report.items()))
 
     # Step 2
     if config.max_lines and not args.sample_rows:

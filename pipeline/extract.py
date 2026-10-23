@@ -29,7 +29,7 @@ from collections import Counter
 from pathlib import Path
 from datetime import datetime
 
-from pipeline.sampling import representativeness
+from pipeline.sampling import allocate, representativeness, weighted_total_variation
 
 # ARCOS column names in the real file (lowercase)
 COLUMN_MAP = {
@@ -91,131 +91,190 @@ def number_occurrences(record, occurrences):
         record["transaction_id"] += f"|line-{occurrences[key]}"
 
 
-def extract(input_path, output_path, limit=None, chunk_size=50_000, sample_size=None, seed=0):
-    """Converts the raw file. With sample_size, keeps a uniform random sample of the valid rows
-    (Algorithm R, Vitter 1985) over the WHOLE file, instead of the first rows. limit keeps the
-    legacy head-of-file behaviour and cannot be combined with sample_size."""
-    if sample_size and limit:
-        raise ValueError("limit (head of file) and sample_size (random sample) are mutually exclusive")
-    input_file  = Path(input_path)
-    output_file = Path(output_path)
-    output_file.parent.mkdir(parents=True, exist_ok=True)
+def open_text(input_file):
+    if input_file.suffix == ".gz":
+        return gzip.open(input_file, "rt", encoding="utf-8", errors="replace")
+    return open(input_file, "r", encoding="utf-8", errors="replace")
 
-    open_fn = (lambda p: gzip.open(p, "rt", encoding="utf-8", errors="replace")
-               if input_file.suffix == ".gz"
-               else open(input_file, "r", encoding="utf-8", errors="replace"))
 
-    # Detect delimiter from first 4KB
-    with open_fn(input_file) as f:
+def iter_records(input_file, stats):
+    """Yields every valid normalized record; rows_read, skipped and skip_reasons accumulate in stats."""
+    with open_text(input_file) as f:
         sample = f.read(4096)
     delim = "\t" if sample.count("\t") > sample.count(",") else ","
 
-    converted, skipped, rows_read = 0, 0, 0
-    skip_reasons = {}
-    transaction_occurrences = {}
-    rng = random.Random(seed)
-    reservoir = []
-    population_valid = 0
-    population_year, population_drug = Counter(), Counter()
-
-    with open_fn(input_file) as f_in, \
-         open(output_file, "w", newline="", encoding="utf-8") as f_out:
-
+    with open_text(input_file) as f_in:
         reader = csv.DictReader(f_in, delimiter=delim)
         headers = [h.strip().lower() for h in (reader.fieldnames or [])]
-
-        # Resolve actual column names from the file
-        col = {field: find_column(headers, candidates)
-               for field, candidates in COLUMN_MAP.items()}
-
+        col = {field: find_column(headers, candidates) for field, candidates in COLUMN_MAP.items()}
         missing = [f for f, c in col.items() if c is None and f != "quantity_grams"]
         if missing:
             print(f"WARNING: columns not found in source: {missing}", file=sys.stderr)
 
-        writer = csv.DictWriter(f_out, fieldnames=OUTPUT_COLUMNS)
-        writer.writeheader()
-
         for row in reader:
-            rows_read += 1
-            # Normalize header keys to lowercase — skip None keys (extra columns beyond header)
+            stats["rows_read"] += 1
             row = {k.strip().lower(): v for k, v in row.items() if k is not None}
-
             try:
                 order_form = row.get("order_form_no", "").strip()
                 txn_id_raw = row.get("transaction_id", "").strip()
-                transaction_date = normalize_date(row.get(col["transaction_date"], ""))
-                dosage_unit = normalize_positive_integer(row.get(col["dosage_unit"], ""))
-
                 record = {
                     "transaction_id":   order_form or txn_id_raw,
                     "reporter_id":      row.get(col["reporter_id"], "").strip().upper(),
                     "buyer_id":         row.get(col["buyer_id"], "").strip().upper(),
-                    "transaction_date": transaction_date,
+                    "transaction_date": normalize_date(row.get(col["transaction_date"], "")),
                     "drug_code":        normalize_ndc(row.get(col["drug_code"], "")),
                     "quantity_grams":   row.get(col["quantity_grams"], "0").strip() or "0",
-                    "dosage_unit":      dosage_unit,
+                    "dosage_unit":      normalize_positive_integer(row.get(col["dosage_unit"], "")),
                 }
                 missing = [field for field in ("reporter_id", "buyer_id", "drug_code",
                                                 "transaction_date", "dosage_unit") if not record[field]]
                 if record["drug_code"] and not re.fullmatch(r"\d{11}", record["drug_code"]):
                     missing.append("drug_code")
                 if missing:
-                    skipped += 1
-                    skip_reasons[missing[0]] = skip_reasons.get(missing[0], 0) + 1
+                    stats["skipped"] += 1
+                    stats["skip_reasons"][missing[0]] = stats["skip_reasons"].get(missing[0], 0) + 1
                     continue
-
                 record["transaction_id"] = "|".join((
                     record["transaction_id"], record["drug_code"],
-                    record["reporter_id"], record["buyer_id"],
-                    record["transaction_date"],
+                    record["reporter_id"], record["buyer_id"], record["transaction_date"],
                 ))
-
-                if sample_size:
-                    population_valid += 1
-                    population_year[record["transaction_date"][:4]] += 1
-                    population_drug[record["drug_code"]] += 1
-                    if len(reservoir) < sample_size:
-                        reservoir.append((population_valid, record))
-                    else:
-                        j = rng.randrange(population_valid)
-                        if j < sample_size:
-                            reservoir[j] = (population_valid, record)
-                    continue
-
-                number_occurrences(record, transaction_occurrences)
-                writer.writerow(record)
-                converted += 1
-
             except Exception:
-                skipped += 1
-                skip_reasons["unparseable_row"] = skip_reasons.get("unparseable_row", 0) + 1
+                stats["skipped"] += 1
+                stats["skip_reasons"]["unparseable_row"] = stats["skip_reasons"].get("unparseable_row", 0) + 1
+                continue
+            yield record
 
+
+def new_stats():
+    return {"rows_read": 0, "skipped": 0, "skip_reasons": {}}
+
+
+def simple_sample(input_file, sample_size, rng, stats):
+    """Algorithm R over all valid rows (Vitter 1985)."""
+    reservoir, population_valid = [], 0
+    population_year, population_drug = Counter(), Counter()
+    for record in iter_records(input_file, stats):
+        population_valid += 1
+        population_year[record["transaction_date"][:4]] += 1
+        population_drug[record["drug_code"]] += 1
+        if len(reservoir) < sample_size:
+            reservoir.append((population_valid, record))
+        else:
+            j = rng.randrange(population_valid)
+            if j < sample_size:
+                reservoir[j] = (population_valid, record)
+    kept = sorted(reservoir, key=lambda item: item[0])
+    records = [record for _, record in kept]
+    report = {
+        "year": representativeness(population_year, Counter(r["transaction_date"][:4] for r in records)),
+        "drug": representativeness(population_drug, Counter(r["drug_code"] for r in records)),
+    }
+    return records, population_valid, report
+
+
+def stratified_sample(input_file, sample_size, min_per_stratum, rng, stats):
+    """Stratified by drug, proportional allocation with a floor, one reservoir per stratum.
+
+    Pass 1 counts the strata; pass 2 draws a uniform random sample inside each stratum.
+    Every record carries its inclusion weight N_h / n_h, so population totals can be rebuilt.
+    """
+    population_year, population_drug = Counter(), Counter()
+    population_valid = 0
+    for record in iter_records(input_file, stats):
+        population_valid += 1
+        population_year[record["transaction_date"][:4]] += 1
+        population_drug[record["drug_code"]] += 1
+
+    allocation = allocate(population_drug, sample_size, min_per_stratum)
+    reservoirs, seen = {}, Counter()
+    for index, record in enumerate(iter_records(input_file, new_stats())):
+        drug = record["drug_code"]
+        seen[drug] += 1
+        slots = reservoirs.setdefault(drug, [])
+        if len(slots) < allocation[drug]:
+            slots.append((index, record))
+        else:
+            j = rng.randrange(seen[drug])
+            if j < allocation[drug]:
+                slots[j] = (index, record)
+
+    chosen = []
+    for drug, slots in reservoirs.items():
+        weight = population_drug[drug] / len(slots)
+        for index, record in slots:
+            record["sampling_weight"] = repr(weight)
+            chosen.append((index, record))
+    records = [record for _, record in sorted(chosen, key=lambda item: item[0])]
+
+    weighted_year = Counter()
+    for record in records:
+        weighted_year[record["transaction_date"][:4]] += float(record["sampling_weight"])
+    report = {
+        "year": {"total_variation": weighted_total_variation(population_year, weighted_year), "weighted": True},
+        "drug": {"strata": len(population_drug),
+                 "taken_whole": sum(1 for d, n in population_drug.items() if allocation[d] == n),
+                 "raised_to_floor": sum(1 for d, n in population_drug.items()
+                                        if allocation[d] > n * sample_size / population_valid and allocation[d] < n),
+                 "min_per_stratum": min_per_stratum},
+    }
+    return records, population_valid, report
+
+
+def extract(input_path, output_path, limit=None, chunk_size=50_000, sample_size=None, seed=0,
+            design="stratified", min_per_stratum=10):
+    """Converts the raw file.
+
+    With sample_size, draws a seeded random sample over the WHOLE file instead of the first rows:
+    design="stratified" (default) stratifies by drug with proportional allocation and a floor
+    (Cochran 1977) and records the inclusion weight; design="simple" is a uniform sample of all
+    valid rows. limit keeps the legacy head-of-file behaviour and cannot be combined with sampling.
+    """
+    if sample_size and limit:
+        raise ValueError("limit (head of file) and sample_size (random sample) are mutually exclusive")
+    input_file = Path(input_path)
+    output_file = Path(output_path)
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+
+    stats = new_stats()
+    occurrences = {}
+    population_valid, report = 0, None
+    columns = list(OUTPUT_COLUMNS)
+
+    if sample_size:
+        rng = random.Random(seed)
+        if design == "stratified":
+            records, population_valid, report = stratified_sample(input_file, sample_size, min_per_stratum, rng, stats)
+            columns.append("sampling_weight")
+        elif design == "simple":
+            records, population_valid, report = simple_sample(input_file, sample_size, rng, stats)
+        else:
+            raise ValueError(f"unknown sampling design: {design}")
+    else:
+        records = iter_records(input_file, stats)
+
+    converted = 0
+    with open(output_file, "w", newline="", encoding="utf-8") as f_out:
+        writer = csv.DictWriter(f_out, fieldnames=columns)
+        writer.writeheader()
+        for record in records:
+            number_occurrences(record, occurrences)
+            writer.writerow(record)
+            converted += 1
             if limit and converted >= limit:
                 break
 
-        if sample_size:
-            for _, record in sorted(reservoir, key=lambda item: item[0]):
-                number_occurrences(record, transaction_occurrences)
-                writer.writerow(record)
-                converted += 1
-
-    result = {"rows_read": rows_read, "converted": converted, "skipped": skipped, "skip_reasons": skip_reasons,
+    result = {"rows_read": stats["rows_read"], "converted": converted, "skipped": stats["skipped"],
+              "skip_reasons": stats["skip_reasons"],
               "not_in_random_sample": (population_valid - converted) if sample_size else 0,
               "output": str(output_file)}
     if sample_size:
-        kept = [record for _, record in reservoir]
-        result.update({
-            "population_valid": population_valid,
-            "sample_seed": seed,
-            "representativeness": {
-                "year": representativeness(population_year, Counter(r["transaction_date"][:4] for r in kept)),
-                "drug": representativeness(population_drug, Counter(r["drug_code"] for r in kept)),
-            },
-        })
-        report = {k: result[k] for k in ("rows_read", "population_valid", "skipped", "skip_reasons", "not_in_random_sample",
-                                          "sample_seed", "representativeness")}
-        report["sample_size"] = converted
-        Path(str(output_file) + ".sampling.json").write_text(json.dumps(report, indent=2))
+        result.update({"population_valid": population_valid, "sample_seed": seed,
+                       "sampling_design": design, "representativeness": report})
+        keys = ("rows_read", "population_valid", "skipped", "skip_reasons", "not_in_random_sample",
+                "sample_seed", "sampling_design", "representativeness")
+        data = {k: result[k] for k in keys}
+        data["sample_size"] = converted
+        Path(str(output_file) + ".sampling.json").write_text(json.dumps(data, indent=2))
     return result
 
 

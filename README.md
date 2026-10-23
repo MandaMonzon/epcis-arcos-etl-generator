@@ -38,18 +38,25 @@ Each run is saved to `data/epcis/<run-id>/` — previous runs are never overwrit
 ## Scientific sample
 
 `--max-lines` and `extract --limit` only read the FIRST rows of the file, which is not a random sample.
-Use a uniform random sample over the whole raw file instead:
+Use a seeded random sample over the whole raw file instead:
 
 ```bash
 python3 main.py --data arcos_raw.gz --sample-rows 300000 --seed 1 --sample-per-drug 10 --balanced --max-units-per-lot 10
 ```
 
-- Algorithm R (Vitter 1985) over every valid row, seeded by `--seed`: same seed, same sample.
-- `extraction_accounting.json` records the population size, `not_in_random_sample`, and a chi-square
-  goodness-of-fit of the sample against the population by year and by drug (with total variation distance).
-- `--balanced` still drops drugs with fewer than `--sample-per-drug` rows in the sample; the dropped drugs are
-  reported in the scenario accounting.
-- Tests: `tests/test_sampling.py` (uniform inclusion probability, reproducibility, accounting).
+Design (default `--sample-design stratified`, after Cochran 1977, *Sampling Techniques*):
+- Strata are the drugs. Pass 1 counts the rows of every drug; pass 2 draws a uniform random sample (reservoir,
+  Vitter 1985) inside each drug.
+- Allocation is proportional to the drug's size with a floor of `--sample-per-drug` rows. Rare drugs are not
+  lost, drugs with fewer rows than the floor are taken whole, and large drugs keep their proportion.
+- Each row records `sampling_weight = N_h / n_h` (drug rows in the file / rows sampled), so population totals
+  can be rebuilt (Horvitz-Thompson). Without weights, the floor over-represents rare drugs.
+- `--sample-design simple` is a plain uniform sample of all valid rows (rare drugs may vanish).
+- `extraction_accounting.json` records the population size, `not_in_random_sample` and the representativeness
+  (stratified: weighted year total variation, strata taken whole; simple: chi-square vs population).
+- Why the scenario step still takes `--sample-per-drug` rows per drug: equal allocation gives every drug the
+  same number of lots on purpose, to test the rules across drugs, not to estimate national totals.
+- Tests: `tests/test_sampling.py`.
 
 ## Pipeline
 
