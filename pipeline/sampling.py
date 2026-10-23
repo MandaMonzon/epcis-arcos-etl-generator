@@ -83,46 +83,6 @@ def representativeness(population_counts, sample_counts):
             "total_variation": tv, "categories": len(categories)}
 
 
-def allocate(counts, budget, floor):
-    """Proportional allocation with a minimum per stratum (Cochran 1977, ch. 5).
-
-    Strata too small for the floor are taken whole; strata whose proportional share
-    falls below the floor get the floor; the rest share the remaining budget
-    proportionally (largest remainder). The total can exceed the budget only when the
-    floors alone already exceed it.
-    """
-    alloc = {}
-    remaining = dict(counts)
-    left = budget
-    changed = True
-    while remaining and changed:
-        changed = False
-        total = sum(remaining.values())
-        for key, size in sorted(remaining.items()):
-            share = max(left, 0) * size / total
-            if size <= floor or share >= size:
-                take = size if size <= floor or share >= size else floor
-            elif share < floor:
-                take = floor
-            else:
-                continue
-            alloc[key] = take
-            left -= take
-            del remaining[key]
-            changed = True
-            break
-
-    if remaining:
-        total = sum(remaining.values())
-        shares = {k: max(left, 0) * v / total for k, v in remaining.items()}
-        base = {k: int(shares[k]) for k in shares}
-        extra = max(left, 0) - sum(base.values())
-        for key in sorted(shares, key=lambda k: (shares[k] - base[k], k), reverse=True)[:extra]:
-            base[key] += 1
-        alloc.update(base)
-    return alloc
-
-
 def weighted_total_variation(population_counts, weighted_counts):
     """Total variation distance between the population's proportions and the weighted sample's."""
     population_total = sum(population_counts.values())

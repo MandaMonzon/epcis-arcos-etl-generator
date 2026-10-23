@@ -7,7 +7,10 @@ from collections import Counter
 from pathlib import Path
 
 from pipeline.extract import extract
-from pipeline.sampling import allocate, chi_square_p_value, representativeness
+from unittest import mock
+
+import pipeline.extract as extract_module
+from pipeline.sampling import chi_square_p_value, representativeness
 
 HEADER = ["reporter_dea_no", "buyer_dea_no", "transaction_date", "ndc_no", "calc_base_wt_in_gm", "quantity", "order_form_no"]
 
@@ -143,27 +146,41 @@ def skewed_population():
     return rows
 
 
-class AllocationTest(unittest.TestCase):
-    COUNTS = {"a": 4000, "b": 1000, "c": 60, "d": 14, "e": 3}
+class SinglePassTest(unittest.TestCase):
+    def test_the_raw_file_is_read_exactly_once(self):
+        tmp = Path(tempfile.mkdtemp())
+        write_raw(tmp / "raw.gz", skewed_population())
+        with mock.patch.object(extract_module, "iter_records", wraps=extract_module.iter_records) as spy:
+            extract(tmp / "raw.gz", tmp / "clean.csv", sample_size=500, seed=1, min_per_stratum=10)
+        self.assertEqual(spy.call_count, 1)
 
-    def test_total_matches_budget_and_never_exceeds_a_stratum(self):
-        alloc = allocate(self.COUNTS, 500, floor=10)
-        self.assertEqual(sum(alloc.values()), 500)
-        self.assertTrue(all(alloc[k] <= self.COUNTS[k] for k in alloc))
-
-    def test_every_stratum_gets_the_floor_or_all_of_its_rows(self):
-        alloc = allocate(self.COUNTS, 500, floor=10)
-        for key, size in self.COUNTS.items():
-            self.assertGreaterEqual(alloc[key], min(10, size))
+    def test_sample_size_is_close_to_the_budget_plus_floor_top_ups(self):
+        _, rows, _ = run(skewed_population(), sample_size=500, seed=2, min_per_stratum=10)
+        self.assertGreaterEqual(len(rows), 500)
+        self.assertLessEqual(len(rows), 500 + 10 * 5)
 
     def test_large_strata_stay_proportional(self):
-        alloc = allocate(self.COUNTS, 500, floor=10)
-        self.assertAlmostEqual(alloc["a"] / alloc["b"], 4.0, delta=0.1)
+        ratios = []
+        for seed in range(1, 11):
+            _, rows, _ = run(skewed_population(), sample_size=500, seed=seed, min_per_stratum=10)
+            counts = Counter(r["drug_code"] for r in rows)
+            ratios.append(counts["10000000001"] / counts["10000000002"])
+        self.assertAlmostEqual(sum(ratios) / len(ratios), 4.0, delta=0.5)
 
-    def test_budget_smaller_than_floors_still_keeps_the_floor(self):
-        alloc = allocate(self.COUNTS, 20, floor=10)
-        self.assertEqual(alloc["e"], 3)
-        self.assertGreaterEqual(alloc["a"], 10)
+    def test_memory_stays_bounded_by_twice_the_budget(self):
+        peak = []
+        original = extract_module.stratified_sample
+
+        def spy(input_file, sample_size, min_per_stratum, rng, stats):
+            records, population_valid, report = original(input_file, sample_size, min_per_stratum, rng, stats)
+            peak.append(report["drug"]["peak_kept"])
+            return records, population_valid, report
+
+        tmp = Path(tempfile.mkdtemp())
+        write_raw(tmp / "raw.gz", skewed_population())
+        with mock.patch.object(extract_module, "stratified_sample", spy):
+            extract(tmp / "raw.gz", tmp / "clean.csv", sample_size=300, seed=1, min_per_stratum=10)
+        self.assertLessEqual(peak[0], 2 * 300 + 10 * 5)
 
 
 class StratifiedExtractTest(unittest.TestCase):

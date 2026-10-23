@@ -44,13 +44,16 @@ Use a seeded random sample over the whole raw file instead:
 python3 main.py --data arcos_raw.gz --sample-rows 300000 --seed 1 --sample-per-drug 10 --balanced --max-units-per-lot 10
 ```
 
-Design (default `--sample-design stratified`, after Cochran 1977, *Sampling Techniques*):
-- Strata are the drugs. Pass 1 counts the rows of every drug; pass 2 draws a uniform random sample (reservoir,
-  Vitter 1985) inside each drug.
-- Allocation is proportional to the drug's size with a floor of `--sample-per-drug` rows. Rare drugs are not
-  lost, drugs with fewer rows than the floor are taken whole, and large drugs keep their proportion.
-- Each row records `sampling_weight = N_h / n_h` (drug rows in the file / rows sampled), so population totals
-  can be rebuilt (Horvitz-Thompson). Without weights, the floor over-represents rare drugs.
+Design (default `--sample-design stratified`, after Cochran 1977, *Sampling Techniques*), in ONE pass over the file:
+- Strata are the drugs. Each valid row gets a seeded uniform key; rows below a shared threshold are kept, and
+  the threshold drops whenever more than 2x the budget is held (nested keys keep the sample uniform). Memory
+  is at most 2 x `--sample-rows` rows plus the floor.
+- Allocation is proportional to the drug's size, with a floor of `--sample-per-drug` rows. Rare drugs are not
+  lost, drugs with fewer rows than the floor are taken whole, and inside each drug the sample is a uniform
+  random subset. The total is the budget plus the floor top-ups.
+- Each row records `sampling_weight = N_h / n_h` (drug rows in the file / rows sampled, counted in the same
+  pass), so population totals can be rebuilt (Horvitz-Thompson). Without weights, the floor over-represents
+  rare drugs.
 - `--sample-design simple` is a plain uniform sample of all valid rows (rare drugs may vanish).
 - `extraction_accounting.json` records the population size, `not_in_random_sample` and the representativeness
   (stratified: weighted year total variation, strata taken whole; simple: chi-square vs population).
