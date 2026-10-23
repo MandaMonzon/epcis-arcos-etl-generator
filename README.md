@@ -35,6 +35,22 @@ python3 main.py
 
 Each run is saved to `data/epcis/<run-id>/` — previous runs are never overwritten.
 
+## Scientific sample
+
+`--max-lines` and `extract --limit` only read the FIRST rows of the file, which is not a random sample.
+Use a uniform random sample over the whole raw file instead:
+
+```bash
+python3 main.py --data arcos_raw.gz --sample-rows 300000 --seed 1 --sample-per-drug 10 --balanced --max-units-per-lot 10
+```
+
+- Algorithm R (Vitter 1985) over every valid row, seeded by `--seed`: same seed, same sample.
+- `extraction_accounting.json` records the population size, `not_in_random_sample`, and a chi-square
+  goodness-of-fit of the sample against the population by year and by drug (with total variation distance).
+- `--balanced` still drops drugs with fewer than `--sample-per-drug` rows in the sample; the dropped drugs are
+  reported in the scenario accounting.
+- Tests: `tests/test_sampling.py` (uniform inclusion probability, reproducibility, accounting).
+
 ## Pipeline
 
 ```

@@ -21,10 +21,15 @@ Usage:
 import csv
 import gzip
 import argparse
+import json
+import random
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 from datetime import datetime
+
+from pipeline.sampling import representativeness
 
 # ARCOS column names in the real file (lowercase)
 COLUMN_MAP = {
@@ -78,7 +83,20 @@ def normalize_positive_integer(raw):
     return str(int(number))
 
 
-def extract(input_path, output_path, limit=None, chunk_size=50_000):
+def number_occurrences(record, occurrences):
+    key = (record["transaction_id"], record["drug_code"], record["reporter_id"],
+           record["buyer_id"], record["transaction_date"])
+    occurrences[key] = occurrences.get(key, 0) + 1
+    if occurrences[key] > 1:
+        record["transaction_id"] += f"|line-{occurrences[key]}"
+
+
+def extract(input_path, output_path, limit=None, chunk_size=50_000, sample_size=None, seed=0):
+    """Converts the raw file. With sample_size, keeps a uniform random sample of the valid rows
+    (Algorithm R, Vitter 1985) over the WHOLE file, instead of the first rows. limit keeps the
+    legacy head-of-file behaviour and cannot be combined with sample_size."""
+    if sample_size and limit:
+        raise ValueError("limit (head of file) and sample_size (random sample) are mutually exclusive")
     input_file  = Path(input_path)
     output_file = Path(output_path)
     output_file.parent.mkdir(parents=True, exist_ok=True)
@@ -95,6 +113,10 @@ def extract(input_path, output_path, limit=None, chunk_size=50_000):
     converted, skipped, rows_read = 0, 0, 0
     skip_reasons = {}
     transaction_occurrences = {}
+    rng = random.Random(seed)
+    reservoir = []
+    population_valid = 0
+    population_year, population_drug = Counter(), Counter()
 
     with open_fn(input_file) as f_in, \
          open(output_file, "w", newline="", encoding="utf-8") as f_out:
@@ -147,14 +169,20 @@ def extract(input_path, output_path, limit=None, chunk_size=50_000):
                     record["reporter_id"], record["buyer_id"],
                     record["transaction_date"],
                 ))
-                occurrence_key = (record["transaction_id"], record["drug_code"],
-                                  record["reporter_id"], record["buyer_id"],
-                                  record["transaction_date"])
-                occurrence = transaction_occurrences.get(occurrence_key, 0) + 1
-                transaction_occurrences[occurrence_key] = occurrence
-                if occurrence > 1:
-                    record["transaction_id"] += f"|line-{occurrence}"
 
+                if sample_size:
+                    population_valid += 1
+                    population_year[record["transaction_date"][:4]] += 1
+                    population_drug[record["drug_code"]] += 1
+                    if len(reservoir) < sample_size:
+                        reservoir.append((population_valid, record))
+                    else:
+                        j = rng.randrange(population_valid)
+                        if j < sample_size:
+                            reservoir[j] = (population_valid, record)
+                    continue
+
+                number_occurrences(record, transaction_occurrences)
                 writer.writerow(record)
                 converted += 1
 
@@ -165,8 +193,30 @@ def extract(input_path, output_path, limit=None, chunk_size=50_000):
             if limit and converted >= limit:
                 break
 
-    return {"rows_read": rows_read, "converted": converted, "skipped": skipped, "skip_reasons": skip_reasons,
-            "output": str(output_file)}
+        if sample_size:
+            for _, record in sorted(reservoir, key=lambda item: item[0]):
+                number_occurrences(record, transaction_occurrences)
+                writer.writerow(record)
+                converted += 1
+
+    result = {"rows_read": rows_read, "converted": converted, "skipped": skipped, "skip_reasons": skip_reasons,
+              "not_in_random_sample": (population_valid - converted) if sample_size else 0,
+              "output": str(output_file)}
+    if sample_size:
+        kept = [record for _, record in reservoir]
+        result.update({
+            "population_valid": population_valid,
+            "sample_seed": seed,
+            "representativeness": {
+                "year": representativeness(population_year, Counter(r["transaction_date"][:4] for r in kept)),
+                "drug": representativeness(population_drug, Counter(r["drug_code"] for r in kept)),
+            },
+        })
+        report = {k: result[k] for k in ("rows_read", "population_valid", "skipped", "skip_reasons", "not_in_random_sample",
+                                          "sample_seed", "representativeness")}
+        report["sample_size"] = converted
+        Path(str(output_file) + ".sampling.json").write_text(json.dumps(report, indent=2))
+    return result
 
 
 def main():
@@ -174,10 +224,12 @@ def main():
     parser = argparse.ArgumentParser(description="Task 1 — Extract ARCOS .gz to clean CSV")
     parser.add_argument("--input",  "-i", default=str(BASE.parent / "raw_data_original.gz"), help=".gz or .csv ARCOS file")
     parser.add_argument("--output", "-o", default=str(BASE / "data/normalized/arcos_clean.csv"), help="Output CSV path")
-    parser.add_argument("--limit",  "-n", type=int,   default=None, help="Max rows to extract")
+    parser.add_argument("--limit",  "-n", type=int,   default=None, help="Max rows to extract (head of file, NOT random)")
+    parser.add_argument("--sample-rows", type=int, default=None, help="Uniform random sample of this many valid rows")
+    parser.add_argument("--seed", type=int, default=0, help="Seed of the random sample")
     args = parser.parse_args()
 
-    result = extract(args.input, args.output, args.limit)
+    result = extract(args.input, args.output, args.limit, sample_size=args.sample_rows, seed=args.seed)
     print(f"Extracted: {result['converted']:,} rows  |  Skipped: {result['skipped']:,}")
     print(f"Output:    {result['output']}")
 

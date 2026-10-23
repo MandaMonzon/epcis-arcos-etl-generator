@@ -51,6 +51,10 @@ def parse_args() -> argparse.Namespace:
                          help=f"Rows to read from arcos_clean.csv. "
                               f"Use 0 for the full dataset (~26M rows, ~5 min). "
                               f"Default: {DEFAULT_MAX_LINES}")
+    parser.add_argument("--sample-rows", type=int, default=None,
+                         help="Uniform random sample of this many valid rows over the WHOLE raw file "
+                              "(seeded by --seed, with a representativeness report). "
+                              "Preferred over --max-lines, which only reads the first rows.")
     parser.add_argument("--sample-per-drug", type=int, default=DEFAULT_SAMPLE_PER_DRUG,
                          help=f"Transactions per distinct drug (reservoir sampling, "
                               f"reproducible). Use 0 to keep all. Default: {DEFAULT_SAMPLE_PER_DRUG}")
@@ -106,16 +110,25 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Step 1
-    if clean_csv.exists():
+    if clean_csv.exists() and not args.sample_rows:
         print(f"[1/3] arcos_clean.csv already exists - skipping extraction.")
     else:
         print(f"[1/3] Extracting {data_path.name} -> arcos_clean.csv ...")
-        result = extract(str(data_path), str(clean_csv))
-        extraction_json.write_text(json.dumps(
-            {k: result[k] for k in ("rows_read", "converted", "skipped", "skip_reasons")}, indent=2))
+        result = extract(str(data_path), str(clean_csv), sample_size=args.sample_rows, seed=args.seed)
+        keys = ["rows_read", "converted", "skipped", "skip_reasons", "not_in_random_sample"]
+        if args.sample_rows:
+            keys += ["population_valid", "sample_seed", "representativeness"]
+        extraction_json.write_text(json.dumps({k: result[k] for k in keys}, indent=2))
         print(f"      {result['converted']:,} rows extracted.")
+        if args.sample_rows:
+            for name, report in result["representativeness"].items():
+                print(f"      representativeness by {name}: p={report['p_value']}, "
+                      f"total variation={report['total_variation']:.4f}")
 
     # Step 2
+    if config.max_lines and not args.sample_rows:
+        print("[warning] --max-lines reads the FIRST rows of the file, not a random sample; "
+              "use --sample-rows for a scientific sample.")
     mode         = f"(first {config.max_lines:,} rows)" if config.max_lines else "(all rows)"
     balance_note = ", balanced (equal transactions/drug)" if config.balanced else ""
     print(f"[2/3] Building scenario_template.csv {mode}, {config.sample_per_drug} tx/drug{balance_note} ...")
