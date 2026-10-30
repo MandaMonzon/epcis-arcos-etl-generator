@@ -33,6 +33,11 @@ def jurisdiction_of(urn):
     return "US" if ".us." in urn or "us.dea" in urn else "EU"
 
 
+def transaction_of(event):
+    source = event.get("ilmd") or event
+    return (source.get("cbvmda:transactionID") or source["arcos:transactionID"]).strip()
+
+
 class ScenarioTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -40,7 +45,7 @@ class ScenarioTest(unittest.TestCase):
         events = generate_events()
         cls.by_tx = {}
         for e in events:
-            cls.by_tx.setdefault(e["ilmd"]["cbvmda:transactionID"].strip(), []).append(e)
+            cls.by_tx.setdefault(transaction_of(e), []).append(e)
         cls.events = events
 
     def lot(self, anomaly):
@@ -121,8 +126,8 @@ class ScenarioTest(unittest.TestCase):
 
     def test_shipment_receipt_mismatch_has_desadv_without_recadv(self):
         types = {b["type"] for e in self.lot("shipment_receipt_mismatch") for b in e.get("bizTransactionList", [])}
-        self.assertIn("urn:epcglobal:cbv:btt:desadv", types)
-        self.assertNotIn("urn:epcglobal:cbv:btt:recadv", types)
+        self.assertIn("desadv", types)
+        self.assertNotIn("recadv", types)
 
     def test_many_suppliers_lists_at_least_nine_distinct_distributors(self):
         distributors = {s["source"] for e in self.lot("many_suppliers") for s in e.get("sourceList", [])
@@ -141,12 +146,23 @@ class ScenarioTest(unittest.TestCase):
     def test_event_vocabulary_follows_gs1_cbv_2_0(self):
         biz_steps = set(CBV["BizStep"])
         dispositions = set(CBV["Disp"])
-        transaction_types = {f"urn:epcglobal:cbv:btt:{name}" for name in (n.split("-")[-1] for n in CBV["BTT"])}
+        transaction_types = {name for name in (n.split("-")[-1] for n in CBV["BTT"])}
         for e in self.events:
             self.assertIn(e["bizStep"], biz_steps)
             self.assertIn(e["disposition"], dispositions)
             for b in e.get("bizTransactionList", []):
                 self.assertIn(b["type"], transaction_types)
+
+    def test_ilmd_only_on_add_object_events_and_other_events_carry_arcos_fields(self):
+        for e in self.events:
+            if e["type"] != "ObjectEvent":
+                continue
+            if e["action"] == "ADD":
+                self.assertIn("ilmd", e)
+            else:
+                self.assertNotIn("ilmd", e)
+                self.assertIn("arcos:lotNumber", e)
+                self.assertIn("arcos:transactionID", e)
 
     def test_event_times_are_iso_8601_utc(self):
         for e in self.events:

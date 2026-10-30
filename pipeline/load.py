@@ -158,6 +158,19 @@ def parse_date(date_str):
         return datetime.now(timezone.utc)
 
 
+ARCOS_CONTEXT = {"arcos": "https://github.com/MandaMonzon/epcis-arcos-etl-generator/ns#"}
+
+
+def lot_fields(action, transaction_id):
+    """
+    EPCIS 2.0 allows `ilmd` only on ObjectEvent with action ADD, so OBSERVE events carry the
+    same values in namespaced extension fields (the arcos prefix is declared in the document @context).
+    """
+    if action == "ADD":
+        return {"ilmd": {"cbvmda:lotNumber": transaction_id, "cbvmda:transactionID": transaction_id}}
+    return {"arcos:lotNumber": transaction_id, "arcos:transactionID": transaction_id}
+
+
 # ─── Event builder ────────────────────────────────────────────────────────────
 
 def make_event(sgtin, biz_step, disposition, event_time,
@@ -169,6 +182,7 @@ def make_event(sgtin, biz_step, disposition, event_time,
     Builds one GS1 EPCIS 2.0 ObjectEvent dict.
     extra_sources: list of {"type":..., "source":...} to append to sourceList.
     """
+    action    = "ADD" if biz_step == "commissioning" else "OBSERVE"
     ts        = event_time.strftime("%Y-%m-%dT%H:%M:%SZ")
     event_key = f"{sgtin}|{biz_step}|{ts}".encode()
     event_id  = "urn:uuid:" + hashlib.sha256(event_key).hexdigest()[:32]
@@ -181,10 +195,10 @@ def make_event(sgtin, biz_step, disposition, event_time,
     if extra_sources:
         sources.extend(extra_sources)
 
-    return {
+    event = {
         "eventID":             event_id,
         "type":                "ObjectEvent",
-        "action":              "OBSERVE",
+        "action":              action,
         "eventTime":           ts,
         "eventTimeZoneOffset": "+00:00",
         "bizStep":             biz_step,
@@ -198,11 +212,9 @@ def make_event(sgtin, biz_step, disposition, event_time,
             {"type": "possessing_party", "destination": dest_pgln},
             {"type": "owning_party",     "destination": dest_pgln},
         ],
-        "ilmd": {
-            "cbvmda:lotNumber":     transaction_id,
-            "cbvmda:transactionID": transaction_id,
-        },
     }
+    event.update(lot_fields(action, transaction_id))
+    return event
 
 
 # ─── AggregationEvent builder ─────────────────────────────────────────────────
@@ -275,10 +287,11 @@ def make_transaction_event(sgtins, biz_trans_type, biz_trans_id,
     2.0 the official type name is "TransactionEvent".
 
     GS1 CBV 2.0 §7.4 — Business Transaction Types:
-      urn:epcglobal:cbv:btt:po       — Purchase Order
-      urn:epcglobal:cbv:btt:inv      — Invoice
-      urn:epcglobal:cbv:btt:desadv   — Despatch Advice (ASN)
-      urn:epcglobal:cbv:btt:recadv   — Receiving Advice
+      po       — Purchase Order
+      inv      — Invoice
+      desadv   — Despatch Advice (ASN)
+      recadv   — Receiving Advice
+    (short names are the EPCIS 2.0 JSON form; the schema rejects the urn:epcglobal:cbv:btt: prefix)
 
     Reference: https://ref.gs1.org/standards/cbv
     """
@@ -364,7 +377,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
         ))
         # TransactionEvent: seller ships full lot
         lot_events.append(make_transaction_event(
-            all_sgtins, "urn:epcglobal:cbv:btt:desadv", po_number,
+            all_sgtins, "desadv", po_number,
             "shipping", "in_transit", date_b,
             GLN_EU_PORT, eu_pgln, us_pgln, txn_id,
         ))
@@ -376,7 +389,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
         ))
         # TransactionEvent: buyer confirms receipt of partial lot
         lot_events.append(make_transaction_event(
-            received_sgtins, "urn:epcglobal:cbv:btt:recadv", po_number,
+            received_sgtins, "recadv", po_number,
             "receiving", "active", date_c,
             us_sgln, us_pgln, us_pgln, txn_id,
         ))
@@ -390,7 +403,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
         ))
         # TransactionEvent: seller emits despatch advice (seller side only)
         lot_events.append(make_transaction_event(
-            all_sgtins, "urn:epcglobal:cbv:btt:desadv", po_number,
+            all_sgtins, "desadv", po_number,
             "shipping", "in_transit", date_b,
             GLN_EU_PORT, eu_pgln, us_pgln, txn_id,
         ))
@@ -406,7 +419,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
         ))
         # TransactionEvent: PO says destination = buyer (us_pgln)
         lot_events.append(make_transaction_event(
-            all_sgtins, "urn:epcglobal:cbv:btt:desadv", po_number,
+            all_sgtins, "desadv", po_number,
             "shipping", "in_transit", date_b,
             GLN_EU_PORT, eu_pgln, us_pgln, txn_id,
         ))
@@ -419,7 +432,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
         ))
         # TransactionEvent: receiving at wrong location
         lot_events.append(make_transaction_event(
-            all_sgtins, "urn:epcglobal:cbv:btt:recadv", po_number,
+            all_sgtins, "recadv", po_number,
             "receiving", "active", date_c,
             wrong_sgln, wrong_pgln, wrong_pgln, txn_id,
         ))
@@ -432,7 +445,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
             eu_gln, eu_gln, eu_gln, eu_pgln, GLN_EU_PORT, PGLN_EU_PORT, txn_id,
         ))
         lot_events.append(make_transaction_event(
-            all_sgtins, "urn:epcglobal:cbv:btt:desadv", po_number,
+            all_sgtins, "desadv", po_number,
             "shipping", "in_transit", date_b,
             GLN_EU_PORT, eu_pgln, us_pgln, txn_id,
         ))
@@ -442,7 +455,7 @@ def lot_level_events(row, all_sgtins, wp_dates, lot_events):
             us_sgln, us_sgln, GLN_EU_PORT, PGLN_EU_PORT, us_sgln, us_pgln, txn_id,
         ))
         lot_events.append(make_transaction_event(
-            all_sgtins, "urn:epcglobal:cbv:btt:recadv", po_number,
+            all_sgtins, "recadv", po_number,
             "receiving", "active", date_c,
             us_sgln, us_pgln, us_pgln, txn_id,
         ))
@@ -654,7 +667,7 @@ def convert_scenario(input_path, output_path, limit=None, max_units_per_lot=None
         events = events[:max_events]
 
     document = {
-        "@context":      ["https://ref.gs1.org/standards/epcis/epcis-context.jsonld"],
+        "@context":      ["https://ref.gs1.org/standards/epcis/epcis-context.jsonld", ARCOS_CONTEXT],
         "type":          "EPCISDocument",
         "schemaVersion": "2.0",
         "creationDate":  max((e["eventTime"] for e in events), default="1970-01-01T00:00:00Z"),

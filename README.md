@@ -61,6 +61,14 @@ Design (default `--sample-design stratified`, after Cochran 1977, *Sampling Tech
   same number of lots on purpose, to test the rules across drugs, not to estimate national totals.
 - Tests: `tests/test_sampling.py`.
 
+## EPCIS 2.0 schema conformance
+
+The events validate against the official GS1 EPCIS 2.0 JSON Schema:
+
+- `ilmd` appears only on `ObjectEvent` with `action: ADD` (commissioning). Other object events are `OBSERVE` and carry
+  the lot in the `arcos:lotNumber` and `arcos:transactionID` extension fields (the `arcos` prefix is declared in `@context`).
+- `bizTransaction` types use the short CBV names (`desadv`, `recadv`, ...), not the `urn:epcglobal:cbv:btt:` prefix.
+
 ## Pipeline
 
 ```
